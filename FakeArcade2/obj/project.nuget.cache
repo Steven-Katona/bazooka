@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "utBdZlPrAS0flvopmqg7M6+badDyaCNcW9KYtGTlGXrz0dTfhhdTDdcONCxEgOHeB2M6hog7W6QmSUpDitpzjw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\steve\\source\\repos\\FakeArcade2\\FakeArcade2\\FakeArcade2.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\steve\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\steve\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
+  ],
+  "logs": []
+}
