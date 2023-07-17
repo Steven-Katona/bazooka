@@ -47,9 +47,9 @@ namespace FakeArcade2.GameStuff
             return transform;
         }
 
-        public void newFocus()
+        public void newFocus(Optic newSubject)
         {
-
+            focus = newSubject;
         }
     }
 }
