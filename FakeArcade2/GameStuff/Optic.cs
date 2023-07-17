@@ -26,11 +26,6 @@ namespace FakeArcade2.GameStuff
         }
 
 
-
-
-
-
-
         public void preUpdate()
         {
             int x_move = horizontal;
@@ -44,6 +39,10 @@ namespace FakeArcade2.GameStuff
             movement = (x_move, y_move);
         }
 
+        public Vector2 getPosition()
+        {
+            return myLocation;
+        }
 
         public void Update(GameTime gameTime)
         {
