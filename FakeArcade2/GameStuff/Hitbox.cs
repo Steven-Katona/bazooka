@@ -13,11 +13,18 @@ namespace FakeArcade2.GameStuff
     
     internal class Hitbox
     {
+        enum behavior : ushort
+        { 
+            safe = 0,
+            danger = 1,
+            solid = 2, 
+            jump = 3
+        };
         Rectangle myBounds;
         Texture2D drawnBox;
         Vector2 myCenter;
-        private static readonly string hitboxColor = "#110a09";
-        private static readonly string animationColor = "#d95763";
+        bool firstPointFound = false;
+        private static readonly string hitboxColor = "{R:17 G:10 B:9 A:255}";
         public Hitbox(int x, int y, int width, int height) 
         { 
             myBounds = new(x, y, width, height);
@@ -30,6 +37,7 @@ namespace FakeArcade2.GameStuff
             Point lastpoint = new(0,0);
 
             Color[] color = new Color[mask.Height * mask.Width];
+            mask.GetData(color);
             for (int loop_y = 0; loop_y < mask.Height; loop_y++)
             {
                 for (int loop_x = 0; loop_x < mask.Width; loop_x++)
@@ -38,16 +46,22 @@ namespace FakeArcade2.GameStuff
                     string hexTest = currentPixel.ToString();
                     if(hexTest.Equals(hitboxColor))
                     {
-                        if (firstpoint.Equals(new Point(0,0))) { firstpoint = new Point(loop_x, loop_y); }
+                        if (firstPointFound) 
+                        {
+                            lastpoint = new Point(loop_x, loop_y);
+                        }
                         else
-                        {lastpoint = new Point(loop_x, loop_y);
-        }
+                        {
+                            firstpoint = new Point(loop_x, loop_y);
+                            firstPointFound = true;
+
+                        }
                     }
                 }
             }
 
-            myBounds = new(x, y, firstpoint.X - lastpoint.X, firstpoint.Y - lastpoint.Y);
-            //myCenter = myBounds.Center;
+            myBounds = new(x, y, lastpoint.X - firstpoint.X, lastpoint.Y - firstpoint.Y);
+            myCenter = new(myBounds.Center.X, myBounds.Center.Y);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch _spriteBatch, GraphicsDevice _graphics)
@@ -62,16 +76,17 @@ namespace FakeArcade2.GameStuff
                     {
                         if (loop_y == 0 || loop_x == 0)
                         {
-                            box[loop_x + (loop_y * myBounds.Height)] = Color.Yellow;
+                            box[loop_x + (loop_y * myBounds.Width)] = Color.Yellow;
                         }
 
-                        if (loop_y == myBounds.Height || loop_x == myBounds.Width)
+                        if (loop_y == myBounds.Height - 1 || loop_x == myBounds.Width - 1)
                         {
-                            box[loop_x + (loop_y * myBounds.Height)] = Color.Yellow;
+                            box[loop_x + (loop_y * myBounds.Width)] = Color.Yellow;
                         }
                     }
                 }
                 drawnBox = new(_graphics, myBounds.Width, myBounds.Height);
+                drawnBox.SetData(box);
             }
 
 

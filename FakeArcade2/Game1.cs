@@ -9,6 +9,7 @@ namespace FakeArcade2
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        Hitbox test;
 
         public Game1()
         {
@@ -20,7 +21,8 @@ namespace FakeArcade2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            Texture2D testBox = Content.Load<Texture2D>("hitbox2d/grenade_hitbox");
+            test = new Hitbox(testBox, 50,50);
             base.Initialize();
         }
 
@@ -35,7 +37,7 @@ namespace FakeArcade2
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -44,9 +46,10 @@ namespace FakeArcade2
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            _spriteBatch.Begin();
+            test.Draw(gameTime, _spriteBatch, GraphicsDevice);
             // TODO: Add your drawing code here
-
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }

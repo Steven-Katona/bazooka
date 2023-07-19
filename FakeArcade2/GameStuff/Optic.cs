@@ -12,12 +12,7 @@ namespace FakeArcade2.GameStuff
     {
         Texture2D myTexture;
         bool immobile;
-        public int horizontal;
-        public int vertical;
-        public int negativeSlope;
-        public int positiveSlope;
         Vector2 myLocation;
-        (int, int) movement;
         public Optic(Texture2D visual, bool immobile, Vector2 myLocation)
         {
             myTexture = visual;
@@ -26,36 +21,14 @@ namespace FakeArcade2.GameStuff
         }
 
 
-        public void preUpdate()
-        {
-            int x_move = horizontal;
-            int y_move = horizontal;
-            double xy_move = CalculateDiagonalMovement(negativeSlope);
-            double yx_move = CalculateDiagonalMovement(positiveSlope);
-            x_move = (int)Math.Ceiling((x_move * 1.0d) + xy_move);
-            y_move = (int)Math.Ceiling((y_move * 1.0d) - xy_move);
-            x_move = (int)Math.Ceiling((x_move * 1.0d) + yx_move);
-            y_move = (int)Math.Ceiling((y_move * 1.0d) + yx_move);
-            movement = (x_move, y_move);
-        }
+        
 
         public Vector2 getPosition()
         {
             return myLocation;
         }
 
-        public void Update(GameTime gameTime)
-        {
-            int x_move = (int)Math.Ceiling(movement.Item1 * gameTime.ElapsedGameTime.TotalSeconds);
-            int y_move = (int)Math.Ceiling(movement.Item2 * gameTime.ElapsedGameTime.TotalSeconds);
-            moveMe(x_move, y_move);
-        }
-
-        public void moveMe(float x, float y)
-        {
-            myLocation.X += x;
-            myLocation.Y += y;
-        }
+        
 
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {
@@ -63,6 +36,12 @@ namespace FakeArcade2.GameStuff
             {
                 _spriteBatch.Draw(myTexture, myLocation, Color.White);
             }
+        }
+
+        public void moveMe(float x, float y)
+        {
+            myLocation.X += x;
+            myLocation.Y += y;
         }
 
 
