@@ -28,13 +28,12 @@ namespace FakeArcade2.GameStuff
             this.animation = the_current_Animation;
             frameIndex = 0;
             time = 0;
-            if (animation.myAnimation.GetType() == typeof(Texture2D[]))
+            if (animation.myAnimation.GetType() != null)
             {
                 currentDrawnTexture = animation.myAnimation[0];
 
             }
-
-            if(animation.myAnimation.GetType() == typeof(Texture2D))
+            else
             {
                 currentDrawnTexture = animation.staticAnimation;
             }
