@@ -21,7 +21,7 @@ namespace FakeArcade2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Texture2D testBox = Content.Load<Texture2D>("hitbox2d/grenade_hitbox");
+            Texture2D testBox = Content.Load<Texture2D>("hitbox2d/man_man_hitbox");
             test = new Hitbox(testBox, 50,50);
             base.Initialize();
         }

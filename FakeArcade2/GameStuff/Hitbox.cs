@@ -10,17 +10,18 @@ using System.Threading.Tasks;
 
 namespace FakeArcade2.GameStuff
 {
-    
+
     internal class Hitbox
     {
         enum behavior : ushort
-        { 
+        {
             safe = 0,
             danger = 1,
-            solid = 2, 
-            jump = 3
+            solid = 2,
+            jump = 3,
+            sturdy = 4
         };
-        Rectangle myBounds;
+        Rectangle myBounds { get; set; }
         Texture2D drawnBox;
         Vector2 myCenter;
         bool firstPointFound = false;
@@ -29,6 +30,23 @@ namespace FakeArcade2.GameStuff
         { 
             myBounds = new(x, y, width, height);
             myCenter = new(myBounds.Center.X, myBounds.Center.Y);
+        }
+
+        public bool isDrawnBox()
+        {
+            if (drawnBox == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void setCenter(Vector2 newCenter)
+        {
+            myCenter = newCenter;
         }
 
         public Hitbox(Texture2D mask, int x, int y)
@@ -42,7 +60,7 @@ namespace FakeArcade2.GameStuff
             {
                 for (int loop_x = 0; loop_x < mask.Width; loop_x++)
                 { 
-                    Color currentPixel = color[loop_x + (loop_y * mask.Height)];
+                    Color currentPixel = color[loop_x + (loop_y * mask.Width)];
                     string hexTest = currentPixel.ToString();
                     if(hexTest.Equals(hitboxColor))
                     {
@@ -63,6 +81,8 @@ namespace FakeArcade2.GameStuff
             myBounds = new(x, y, lastpoint.X - firstpoint.X, lastpoint.Y - firstpoint.Y);
             myCenter = new(myBounds.Center.X, myBounds.Center.Y);
         }
+
+
 
         public void Draw(GameTime gameTime, SpriteBatch _spriteBatch, GraphicsDevice _graphics)
         {

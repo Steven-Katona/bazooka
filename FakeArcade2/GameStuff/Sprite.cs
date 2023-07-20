@@ -23,7 +23,7 @@ namespace FakeArcade2.GameStuff
         public void preUpdate()
         {
             int x_move = horizontal;
-            int y_move = horizontal;
+            int y_move = vertical;
             double xy_move = CalculateDiagonalMovement(negativeSlope);
             double yx_move = CalculateDiagonalMovement(positiveSlope);
             x_move = (int)Math.Ceiling((x_move * 1.0d) + xy_move);

@@ -35,7 +35,10 @@ namespace FakeArcade2.GameStuff
                     string value = colorArray[loop_x + (loop_y * colorMap.Width)].ToString();
                     int the_out;
                     buildingDecoder.TryGetValue(value, out the_out);
-                    placeObject(the_out, positioning);
+                    if (the_out != 0)
+                    {   
+                        placeObject(the_out, positioning);
+                    }
                     positioning.X += 32;
                 }
                 positioning.Y += 32;
