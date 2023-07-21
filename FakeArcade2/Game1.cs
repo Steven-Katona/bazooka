@@ -11,18 +11,22 @@ namespace FakeArcade2
         private SpriteBatch _spriteBatch;
         Hitbox test;
 
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            AnimationConstruction.Initilize();
+
             Texture2D testBox = Content.Load<Texture2D>("hitbox2d/man_man_hitbox");
-            test = new Hitbox(testBox, 50,50);
+            test = new Hitbox(AnimationConstruction.createHitbox("man_man_hitbox",testBox), (50,50), 0);
             base.Initialize();
         }
 
