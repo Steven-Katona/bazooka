@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,10 @@ namespace FakeArcade2.GameStuff
             getTextureArray = new Dictionary<string, Texture2D[]> { };
         }
 
-        static public Texture2D[] createAnimationTexture(string fileName, Texture2D file, GraphicsDevice _graphicDevice)
+        static public Texture2D[] createAnimationTexture(string fileName, GraphicsDevice _graphicDevice, ContentManager content)
         {
             Texture2D[] result;
+            Texture2D file = content.Load <Texture2D>("texture2d/" + fileName);
             if(getTextureArray.TryGetValue(fileName, out result))
             {
                 return result;
@@ -33,7 +35,7 @@ namespace FakeArcade2.GameStuff
             else
             {
                 int newWidth = 0;
-                Color[] color = new Color[file.Width];
+                Color[] color = new Color[file.Width * file.Height];
                 file.GetData(color);
                 for(int loop_x = 0; loop_x < file.Width; loop_x++)
                 {
@@ -64,13 +66,15 @@ namespace FakeArcade2.GameStuff
                     {
                         for(int loop_x = dummy_Value; loop_x < (dummy_Value + newWidth); loop_x++)
                         {
+                            int indexed_in_file = loop_x + (loop_y * file.Width);
+                            int indexed_in_game = loop_x + (loop_y * newWidth);
                             if (color[loop_x + (loop_y * file.Width)].ToString().Equals(AnimationColor))
                             {
-                                newframe[(loop_x / (iteration + 1)) + (loop_y * newWidth)] = new Color(0, 0, 0, 0);
+                                newframe[(loop_x - dummy_Value) + (loop_y * newWidth)] = new Color(0, 0, 0, 0);
                             }
                             else
                             {
-                                newframe[(loop_x / (iteration + 1)) + (loop_y * newWidth)] = color[loop_x + (loop_y * file.Width)];
+                                newframe[(loop_x - dummy_Value) + (loop_y * newWidth)] = color[loop_x + (loop_y * file.Width)];
                             }
                         }
                     }
@@ -90,16 +94,17 @@ namespace FakeArcade2.GameStuff
 
         
 
-        static public (int,int) createHitbox(string fileName, Texture2D mask)
+        static public (int,int) createHitbox(string fileName, ContentManager content)
         {
             (int, int) value;
-
+            
             if (getHitbox.TryGetValue(fileName, out value))
             {
                 return value;
             }
             else
             {
+                Texture2D mask = content.Load<Texture2D>("hitbox2d/" + fileName);
                 bool firstPointFound = false;
                 Point firstpoint = new(0, 0);
                 Point lastpoint = new(0, 0);

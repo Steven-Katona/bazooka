@@ -19,12 +19,12 @@ namespace FakeArcade2.GameStuff
             danger = 1,
             solid = 2,
             jump = 3,
-            sturdy = 4
+            sturdy = 4,
+            end = 5
         };
         Rectangle myBounds { get; set; }
         Texture2D drawnBox;
-        Vector2 myCenter;
-        bool firstPointFound = false;
+        public Vector2 myCenter {get; set;}
         public int myBehavior { get; set; }
         
         public Hitbox(int x, int y, int width, int height, int behavior) 

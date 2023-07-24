@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,17 @@ namespace FakeArcade2.GameStuff
         readonly Dictionary<string, int> buildingDecoder;
         Screenview view;
         Player the_Player;
-        public Level(IServiceProvider service, ContentManager Content, Texture2D colorMap, int maxWidth, int maxHeight)
+        List<Optic> level_objects;
+        GraphicsDevice graphicDevice;
+        ContentManager content;
+        public (int, int) levelDimensions { get; set; }
+        public Level(IServiceProvider service, ContentManager Content, GraphicsDevice _graphicsDevice, Texture2D colorMap, int maxWidth, int maxHeight)
         {
+            graphicDevice = _graphicsDevice;
+            content = Content;
+            level_objects= new List<Optic>();
             buildingDecoder = new Dictionary<string, int>()
-            {   { "{R:0 G:0 B:1 A:255}", 1 },
+            {   { "{R:0 G:0 B:1 A:255}", 1 }, //block
                 { "{R:1 G:35 B:160 A:255}", 2 },
                 { "{R:130 G:0 B:15 A:255}", 3 },
                 { "{R:170 G:170 B:170 A:255}", 4 }
@@ -26,7 +34,8 @@ namespace FakeArcade2.GameStuff
             Vector2 positioning = new Vector2(0, 0);
             Color[] colorArray = new Color[colorMap.Height * colorMap.Width];
             colorMap.GetData(colorArray);
-
+            view = new(new Vector2(0, 0), the_Player, maxWidth, maxHeight, colorMap.Width * 32, colorMap.Height * 32);
+            levelDimensions = (colorMap.Width * 32, colorMap.Height * 32);
 
             for (int loop_y = 0; loop_y < colorMap.Height; loop_y++)
             {
@@ -42,36 +51,59 @@ namespace FakeArcade2.GameStuff
                     positioning.X += 32;
                 }
                 positioning.Y += 32;
-                view = new(new Vector2(0, 0), the_Player, maxWidth, maxHeight, colorMap.Width * 32, colorMap.Height * 32);
+                positioning.X = 0;
             }
         }
 
-            public void placeObject(int code, Vector2 position)
+        public void placeObject(int code, Vector2 position)
+        {
+            switch (code)
             {
-                switch (code)
-                {
-                    case 0:
-                        break;
-                    default: break;
-                }
-
-
+            case 1:
+                Sprite block = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("block_fakeArcade2", graphicDevice, content), .20f, false),new ((int)position.X,(int)position.Y, 32, 32, 2), true, position);
+                level_objects.Add(block);
+                break;
+            case 2:
+                the_Player = new Player(new Animation(AnimationConstruction.createAnimationTexture("man_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox(AnimationConstruction.createHitbox("man_man_hitbox",content), ((int)position.X, (int)position.Y), 0), (int)position.X, (int)position.Y, false);
+                break;
+            case 3:
+                Sprite lava = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("lava_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox(AnimationConstruction.createHitbox("lava_hitbox", content), ((int)position.X, (int)position.Y), 1), true, position);
+                level_objects.Add(lava);
+                break;
+            case 4:
+                Sprite end_point = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("door_sprite_sheet", graphicDevice, content), .20f, false), new((int)position.X, (int)position.Y, 32, 32, 5), true, position);
+                level_objects.Add(end_point);
+                break;
+            default: break;
             }
 
-            public void Update(GameTime gameTime)
-            {
 
+        }
+
+        public void Update(GameTime gameTime, KeyboardState _keyState)
+        {
+            foreach(Sprite item in level_objects)
+            {
+                item.Update(gameTime);
+            }
+            the_Player.Update(gameTime);
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch _spriteBatch)
+        {
+            foreach(Sprite item in level_objects) 
+            { 
+                item.Draw(gameTime, _spriteBatch);
+                //item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             }
 
-            public void Draw(GameTime gameTime, SpriteBatch _spriteBatch, GraphicsDevice _graphicsDevice)
-            {
+            the_Player.Draw(gameTime, _spriteBatch);
+        }
 
-            }
+        public void Dispose()
+        {
 
-            public void Dispose()
-            {
-
-            }
         }
     }
+}
 

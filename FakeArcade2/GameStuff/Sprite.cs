@@ -15,9 +15,9 @@ namespace FakeArcade2.GameStuff
         public int negativeSlope;
         public int positiveSlope;
         (int, int) movement;
-        public Sprite(Texture2D visual, Hitbox aabb, bool immobile, Vector2 myLocation) : base(visual, immobile, myLocation) 
+        public Sprite(Animation myVisual, Hitbox aabb, bool immobile, Vector2 myLocation) : base(myVisual, aabb, immobile, myLocation) 
         {
-        
+            
         }
 
         public void preUpdate()
@@ -35,10 +35,12 @@ namespace FakeArcade2.GameStuff
 
         public void Update(GameTime gameTime)
         {
-
-            int x_move = (int)Math.Ceiling(movement.Item1 * gameTime.ElapsedGameTime.TotalSeconds);
-            int y_move = (int)Math.Ceiling(movement.Item2 * gameTime.ElapsedGameTime.TotalSeconds);
-            moveMe(x_move, y_move);
+            if (!this.immobile)
+            {
+                int x_move = (int)Math.Ceiling(movement.Item1 * gameTime.ElapsedGameTime.TotalSeconds);
+                int y_move = (int)Math.Ceiling(movement.Item2 * gameTime.ElapsedGameTime.TotalSeconds);
+                moveMe(x_move, y_move);
+            }
         }
 
         

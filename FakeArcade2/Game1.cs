@@ -9,30 +9,51 @@ namespace FakeArcade2
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        Hitbox test;
+        RenderTarget2D _nativeTarget;
+        Rectangle boxingRect;
+        Rectangle _nativeRectangle;
+        Level test;
+        KeyboardState key_state;
+        int maxWidth;
+        int maxHeight;
+    
 
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
             
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            AnimationConstruction.Initilize();
-
-            Texture2D testBox = Content.Load<Texture2D>("hitbox2d/man_man_hitbox");
-            test = new Hitbox(AnimationConstruction.createHitbox("man_man_hitbox",testBox), (50,50), 0);
+            AnimationConstruction.Initilize(); //Required
+            maxHeight = _graphics.PreferredBackBufferHeight;
+            maxWidth = _graphics.PreferredBackBufferWidth;
+            _nativeRectangle = new(0, 0, maxWidth, maxHeight);
+            _nativeTarget = new RenderTarget2D(GraphicsDevice, _nativeRectangle.Width, _nativeRectangle.Height);
+            boxingRect = _nativeRectangle;
+            
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            test = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/test2_level"), maxWidth, maxHeight);
+            (int, int) dem = test.levelDimensions;
+            _nativeRectangle = new(0, 0, dem.Item1, dem.Item2);
+            _nativeTarget = new RenderTarget2D(GraphicsDevice, _nativeRectangle.Width, _nativeRectangle.Height);
+            boxingRect = _nativeRectangle;
+
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -41,7 +62,8 @@ namespace FakeArcade2
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+
+            test.Update(gameTime, key_state);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -49,11 +71,25 @@ namespace FakeArcade2
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
-            test.Draw(gameTime, _spriteBatch, GraphicsDevice);
-            // TODO: Add your drawing code here
+            GraphicsDevice.SetRenderTarget(_nativeTarget);
+            GraphicsDevice.Clear(Color.Blue);
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack);
+
+            
+
+            test.Draw(gameTime, _spriteBatch);
+
             _spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Blue);
+
+
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_nativeTarget, boxingRect, Color.White);
+            _spriteBatch.End();
+
+
             base.Draw(gameTime);
         }
     }

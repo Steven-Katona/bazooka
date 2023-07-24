@@ -10,14 +10,19 @@ namespace FakeArcade2.GameStuff
 {
     internal class Optic
     {
-        Texture2D myTexture;
-        bool immobile;
-        Vector2 myLocation;
-        public Optic(Texture2D visual, bool immobile, Vector2 myLocation)
+        Animation myVisual;
+        public bool immobile {get; set; }
+        protected Vector2 myLocation;
+        public Hitbox myAABB { get; set; }
+        AnimationLogic animator;
+        public Optic(Animation visual, Hitbox aabb, bool immobile, Vector2 myLocation)
         {
-            myTexture = visual;
+            myVisual = visual;
             this.immobile = immobile;
             this.myLocation = myLocation;
+            myAABB = aabb;
+            animator = new AnimationLogic();
+            animator.animationPlay(myVisual);
         }
 
 
@@ -32,9 +37,13 @@ namespace FakeArcade2.GameStuff
 
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {
-            if (myTexture != null) 
+            if (myVisual.myAnimation != null) 
             {
-                _spriteBatch.Draw(myTexture, myLocation, Color.White);
+                animator.Draw(_gameTime, _spriteBatch, getPosition(), myAABB.myCenter, SpriteEffects.None);
+            }
+            else
+            {
+                throw new Exception("something is not right");
             }
         }
 
