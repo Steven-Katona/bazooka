@@ -11,10 +11,10 @@ namespace FakeArcade2.GameStuff
 {
     internal class Player : Entity
     {
-        
-        public Player(Texture2D face, Hitbox aabb, int x, int y , bool immobile = false ): base(face, aabb, immobile, new Vector2(x,y))
+
+        public Player(Animation face, Hitbox aabb, int x, int y , bool immobile = false ): base(face, aabb, immobile, new Vector2(x,y))
         {
-            
+
         }
     }
 }

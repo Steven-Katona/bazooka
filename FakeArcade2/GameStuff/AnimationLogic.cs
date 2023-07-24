@@ -28,14 +28,15 @@ namespace FakeArcade2.GameStuff
             this.animation = the_current_Animation;
             frameIndex = 0;
             time = 0;
-            if (animation.myAnimation.GetType() != null)
+            if (animation.myAnimation.Length == 1)
             {
-                currentDrawnTexture = animation.myAnimation[0];
-
+                animation.staticAnimation = animation.myAnimation[0];
+                currentDrawnTexture = animation.staticAnimation;
             }
             else
             {
-                currentDrawnTexture = animation.staticAnimation;
+                currentDrawnTexture = animation.myAnimation[0];
+                
             }
 
             animationEnd = false;
@@ -57,6 +58,7 @@ namespace FakeArcade2.GameStuff
 
 
             time += (float)_gameTime.ElapsedGameTime.TotalSeconds;
+
             if(animation.myAnimation.GetType() == typeof(Texture2D[])) 
             { 
                 while(time > animation.frameTime)
@@ -71,12 +73,13 @@ namespace FakeArcade2.GameStuff
                         frameIndex = Math.Min((frameIndex + 1) % animation.myAnimation.Length, animation.myAnimation.Length - 1);
                         currentDrawnTexture = animation.myAnimation[frameIndex];
                     }
+                    time = 0;
                 }
                 
             }
 
 
-            _spriteBatch.Draw(currentDrawnTexture, position, null, Color.White, rotate, center, 1.0f, _spriteEffects, draw_priority);
+            _spriteBatch.Draw(currentDrawnTexture, position, Color.White);
         }
 
     }

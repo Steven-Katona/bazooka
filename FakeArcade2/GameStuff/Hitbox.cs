@@ -19,17 +19,26 @@ namespace FakeArcade2.GameStuff
             danger = 1,
             solid = 2,
             jump = 3,
-            sturdy = 4
+            sturdy = 4,
+            end = 5
         };
         Rectangle myBounds { get; set; }
         Texture2D drawnBox;
-        Vector2 myCenter;
-        bool firstPointFound = false;
-        private static readonly string hitboxColor = "{R:17 G:10 B:9 A:255}";
-        public Hitbox(int x, int y, int width, int height) 
+        public Vector2 myCenter {get; set;}
+        public int myBehavior { get; set; }
+        
+        public Hitbox(int x, int y, int width, int height, int behavior) 
         { 
             myBounds = new(x, y, width, height);
             myCenter = new(myBounds.Center.X, myBounds.Center.Y);
+            myBehavior = behavior;
+        }
+
+        public Hitbox((int,int) newDimensions, (int, int) location, int behavior)
+        {
+            myBounds = new(location.Item1, location.Item2, newDimensions.Item1, newDimensions.Item2);
+            myCenter = new(myBounds.Center.X, myBounds.Center.Y);
+            myBehavior = behavior;
         }
 
         public bool isDrawnBox()
@@ -48,40 +57,6 @@ namespace FakeArcade2.GameStuff
         {
             myCenter = newCenter;
         }
-
-        public Hitbox(Texture2D mask, int x, int y)
-        {
-            Point firstpoint = new(0,0);
-            Point lastpoint = new(0,0);
-
-            Color[] color = new Color[mask.Height * mask.Width];
-            mask.GetData(color);
-            for (int loop_y = 0; loop_y < mask.Height; loop_y++)
-            {
-                for (int loop_x = 0; loop_x < mask.Width; loop_x++)
-                { 
-                    Color currentPixel = color[loop_x + (loop_y * mask.Width)];
-                    string hexTest = currentPixel.ToString();
-                    if(hexTest.Equals(hitboxColor))
-                    {
-                        if (firstPointFound) 
-                        {
-                            lastpoint = new Point(loop_x, loop_y);
-                        }
-                        else
-                        {
-                            firstpoint = new Point(loop_x, loop_y);
-                            firstPointFound = true;
-
-                        }
-                    }
-                }
-            }
-
-            myBounds = new(x, y, lastpoint.X - firstpoint.X, lastpoint.Y - firstpoint.Y);
-            myCenter = new(myBounds.Center.X, myBounds.Center.Y);
-        }
-
 
 
         public void Draw(GameTime gameTime, SpriteBatch _spriteBatch, GraphicsDevice _graphics)

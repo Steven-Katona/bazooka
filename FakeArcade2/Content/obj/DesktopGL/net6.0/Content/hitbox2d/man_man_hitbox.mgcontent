@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/hitbox2d/man_man_hitbox.png</SourceFile>
-  <SourceTime>2023-07-12T20:30:40.065079-04:00</SourceTime>
+  <SourceTime>2023-07-20T12:44:53.2817075-04:00</SourceTime>
   <DestFile>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/bin/DesktopGL/Content/hitbox2d/man_man_hitbox.xnb</DestFile>
-  <DestTime>2023-07-18T14:00:19.8588149-04:00</DestTime>
+  <DestTime>2023-07-20T14:50:47.7837985-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
