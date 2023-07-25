@@ -77,7 +77,7 @@ namespace FakeArcade2
 
             
 
-            test.Draw(gameTime, _spriteBatch);
+            test.Draw(gameTime, _spriteBatch, GraphicsDevice);
 
             _spriteBatch.End();
 

@@ -89,12 +89,12 @@ namespace FakeArcade2.GameStuff
             the_Player.Update(gameTime);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch _spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch _spriteBatch, GraphicsDevice _graphicsDevice)
         {
             foreach(Sprite item in level_objects) 
             { 
                 item.Draw(gameTime, _spriteBatch);
-                //item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
+                item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             }
 
             the_Player.Draw(gameTime, _spriteBatch);

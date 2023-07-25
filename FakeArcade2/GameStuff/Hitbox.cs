@@ -86,7 +86,8 @@ namespace FakeArcade2.GameStuff
 
 
 
-            _spriteBatch.Draw(drawnBox, myCenter, Color.White);
+            _spriteBatch.Draw(drawnBox, myBounds, Color.White);
+            //_spriteBatch.Draw(drawnBox, new Vector2 (myBounds.X,myBounds.Y), myBounds, Color.White, 0.0f, myCenter, 1.0f, SpriteEffects.None, 0.9f);
         }
     }
 }
