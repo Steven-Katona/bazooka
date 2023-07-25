@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -10,3 +10,5 @@
 /.vs/FakeArcade2/FileContentIndex/777c8e26-e6ef-456d-abdb-1903a9c3b09a.vsidx
 /.vs/FakeArcade2/FileContentIndex/6ec3a7dd-790d-48e4-b638-8d072bb809e4.vsidx
 /.vs/FakeArcade2/FileContentIndex/5dad35f4-25bf-49ac-b13b-d871f45af38c.vsidx
+/.vs/
+/FakeArcade2.sln
