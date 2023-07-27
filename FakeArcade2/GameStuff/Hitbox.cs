@@ -13,32 +13,29 @@ namespace FakeArcade2.GameStuff
 
     internal class Hitbox
     {
-        enum behavior : ushort
-        {
-            safe = 0,
-            danger = 1,
-            solid = 2,
-            jump = 3,
-            sturdy = 4,
-            end = 5
-        };
-        Rectangle myBounds { get; set; }
+        
+        public Rectangle myBounds;
         Texture2D drawnBox;
         public Vector2 myCenter {get; set;}
-        public int myBehavior { get; set; }
+        public int myBehavior { get; }
         
-        public Hitbox(int x, int y, int width, int height, int behavior) 
+        public Hitbox(int x, int y, int width, int height, Point offset, int behavior) 
         { 
-            myBounds = new(x, y, width, height);
+            myBounds = new(x + offset.X, y + offset.Y, width, height);
             myCenter = new(myBounds.Center.X, myBounds.Center.Y);
             myBehavior = behavior;
         }
 
-        public Hitbox((int,int) newDimensions, (int, int) location, int behavior)
+        public Hitbox((int,int) newDimensions, (int, int) location, Point offset, int behavior)
         {
-            myBounds = new(location.Item1, location.Item2, newDimensions.Item1, newDimensions.Item2);
+            myBounds = new(location.Item1 + offset.X, location.Item2 + offset.Y, newDimensions.Item1, newDimensions.Item2);
             myCenter = new(myBounds.Center.X, myBounds.Center.Y);
             myBehavior = behavior;
+        }
+
+        public ref Rectangle getBounds()
+        {
+            return ref myBounds;
         }
 
         public bool isDrawnBox()
@@ -57,6 +54,8 @@ namespace FakeArcade2.GameStuff
         {
             myCenter = newCenter;
         }
+
+        
 
 
         public void Draw(GameTime gameTime, SpriteBatch _spriteBatch, GraphicsDevice _graphics)
@@ -89,5 +88,7 @@ namespace FakeArcade2.GameStuff
             _spriteBatch.Draw(drawnBox, myBounds, Color.White);
             //_spriteBatch.Draw(drawnBox, new Vector2 (myBounds.X,myBounds.Y), myBounds, Color.White, 0.0f, myCenter, 1.0f, SpriteEffects.None, 0.9f);
         }
+
+        
     }
 }

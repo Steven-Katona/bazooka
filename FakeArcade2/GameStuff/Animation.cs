@@ -21,5 +21,12 @@ namespace FakeArcade2.GameStuff
             this.isLooping = isLooping;
         }
 
+        public Animation(Texture2D animationFrames, float frameTime, bool isLooping)
+        {
+            staticAnimation = animationFrames;
+            this.frameTime = frameTime;
+            this.isLooping = isLooping;
+        }
+
     }
 }

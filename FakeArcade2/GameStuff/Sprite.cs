@@ -10,39 +10,76 @@ namespace FakeArcade2.GameStuff
 {
     internal class Sprite : Optic
     {
-        public int horizontal;
-        public int vertical;
-        public int negativeSlope;
-        public int positiveSlope;
-        (int, int) movement;
+        enum behavior : ushort
+        {
+            none = 0,
+            danger = 1,
+            solid = 2,
+            jump = 3,
+            sturdy = 4,
+            end = 5,
+            safe = 6
+        };
+        public double horizontal {get; set;}
+        public double vertical {get; set;}
+        public (int, int) movement { get; set; }
         public Sprite(Animation myVisual, Hitbox aabb, bool immobile, Vector2 myLocation) : base(myVisual, aabb, immobile, myLocation) 
         {
             
         }
 
-        public void preUpdate()
+        public void preUpdate(GameTime gameTime)
         {
-            int x_move = horizontal;
-            int y_move = vertical;
-            double xy_move = CalculateDiagonalMovement(negativeSlope);
-            double yx_move = CalculateDiagonalMovement(positiveSlope);
-            x_move = (int)Math.Ceiling((x_move * 1.0d) + xy_move);
-            y_move = (int)Math.Ceiling((y_move * 1.0d) - xy_move);
-            x_move = (int)Math.Ceiling((x_move * 1.0d) + yx_move);
-            y_move = (int)Math.Ceiling((y_move * 1.0d) + yx_move);
-            movement = (x_move, y_move);
+            double x_move = horizontal;
+            double y_move = vertical;
+     
+            x_move = (int)Math.Floor(Math.Abs(x_move * gameTime.ElapsedGameTime.TotalSeconds));
+            y_move = (int)Math.Floor(Math.Abs(y_move * gameTime.ElapsedGameTime.TotalSeconds));
+            
+            if(horizontal < 0)
+            {
+                x_move = x_move * -1;
+            }
+
+            if(vertical < 0)
+            {
+                y_move = y_move * -1;
+            }
+            
+            movement = ((int)x_move, (int)y_move);
         }
 
         public void Update(GameTime gameTime)
         {
+            
+
             if (!this.immobile)
             {
-                int x_move = (int)Math.Ceiling(movement.Item1 * gameTime.ElapsedGameTime.TotalSeconds);
-                int y_move = (int)Math.Ceiling(movement.Item2 * gameTime.ElapsedGameTime.TotalSeconds);
-                moveMe(x_move, y_move);
+                preUpdate(gameTime);
+                moveMe(movement.Item1, movement.Item2);
             }
         }
 
-        
+
+        protected bool touchingLeft(Hitbox aabb, int move)
+        {
+            return (myAABB.myBounds.Left + move <= aabb.myBounds.Right) && (myAABB.myBounds.Right > aabb.myBounds.Right) && (myAABB.myBounds.Bottom > aabb.myBounds.Top) && (myAABB.myBounds.Top < aabb.myBounds.Bottom);
+        }
+
+        protected bool touchingRight(Hitbox aabb, int move)
+        {
+            return (myAABB.myBounds.Right + move >= aabb.myBounds.Left) && (myAABB.myBounds.Left < aabb.myBounds.Left) && (myAABB.myBounds.Bottom > aabb.myBounds.Top) && (myAABB.myBounds.Top < aabb.myBounds.Bottom);
+        }
+
+        protected bool touchingBottom(Hitbox aabb, int move)
+        {
+            return (myAABB.myBounds.Bottom + move >= aabb.myBounds.Top) && (myAABB.myBounds.Left < aabb.myBounds.Right) && (myAABB.myBounds.Right > aabb.myBounds.Left) && (myAABB.myBounds.Top < aabb.myBounds.Top);
+        }
+
+        protected bool touchingTop(Hitbox aabb, int move)
+        {
+            return (myAABB.myBounds.Top + move <= aabb.myBounds.Bottom) && (myAABB.myBounds.Left < aabb.myBounds.Right) && (myAABB.myBounds.Right > aabb.myBounds.Left) && (myAABB.myBounds.Bottom > aabb.myBounds.Bottom);
+        }
+
     }
 }

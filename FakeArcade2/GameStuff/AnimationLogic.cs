@@ -39,6 +39,12 @@ namespace FakeArcade2.GameStuff
                 
             }
 
+
+            if(animation.myAnimation == null)
+            {
+                currentDrawnTexture = animation.staticAnimation;
+            }
+
             animationEnd = false;
 
         }

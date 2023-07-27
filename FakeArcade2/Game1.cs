@@ -12,7 +12,7 @@ namespace FakeArcade2
         RenderTarget2D _nativeTarget;
         Rectangle boxingRect;
         Rectangle _nativeRectangle;
-        Level test;
+        Level currentLevel;
         KeyboardState key_state;
         int maxWidth;
         int maxHeight;
@@ -47,8 +47,8 @@ namespace FakeArcade2
         {
             
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            test = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/test2_level"), maxWidth, maxHeight);
-            (int, int) dem = test.levelDimensions;
+            currentLevel = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/test2_level"), maxWidth, maxHeight);
+            (int, int) dem = currentLevel.levelDimensions;
             _nativeRectangle = new(0, 0, dem.Item1, dem.Item2);
             _nativeTarget = new RenderTarget2D(GraphicsDevice, _nativeRectangle.Width, _nativeRectangle.Height);
             boxingRect = _nativeRectangle;
@@ -60,10 +60,15 @@ namespace FakeArcade2
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                currentLevel.Dispose();
                 Exit();
+            }
 
-            test.Update(gameTime, key_state);
+            var state = Keyboard.GetState();
+
+            currentLevel.Update(gameTime, state);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -77,7 +82,7 @@ namespace FakeArcade2
 
             
 
-            test.Draw(gameTime, _spriteBatch, GraphicsDevice);
+            currentLevel.Draw(gameTime, _spriteBatch, GraphicsDevice);
 
             _spriteBatch.End();
 

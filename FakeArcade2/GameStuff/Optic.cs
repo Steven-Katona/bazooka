@@ -25,9 +25,6 @@ namespace FakeArcade2.GameStuff
             animator.animationPlay(myVisual);
         }
 
-
-        
-
         public Vector2 getPosition()
         {
             return myLocation;
@@ -51,10 +48,20 @@ namespace FakeArcade2.GameStuff
         {
             myLocation.X += x;
             myLocation.Y += y;
+            myAABB.getBounds().X += (int)x;
+            myAABB.getBounds().Y += (int)y;
+        }
+
+        public void setPostion(int newX, int newY)
+        {
+            myLocation.X = newX;
+            myLocation.Y = newY;
+            myAABB.getBounds().X = newX;
+            myAABB.getBounds().Y = newY;
         }
 
 
-        static public double CalculateDiagonalMovement(int the_move)
+        static public double CalculateDiagonalMovement(double the_move)
         {
             double amount = the_move / 2;
             amount = Math.Sqrt(amount);

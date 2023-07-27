@@ -60,18 +60,20 @@ namespace FakeArcade2.GameStuff
             switch (code)
             {
             case 1:
-                Sprite block = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("block_fakeArcade2", graphicDevice, content), .20f, false),new ((int)position.X,(int)position.Y, 32, 32, 2), true, position);
+                Sprite block = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("block_fakeArcade2", graphicDevice, content), .20f, false),new ((int)position.X,(int)position.Y, 32, 32, new Point(0,0), 2), true, position);
                 level_objects.Add(block);
                 break;
             case 2:
-                the_Player = new Player(new Animation(AnimationConstruction.createAnimationTexture("man_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox(AnimationConstruction.createHitbox("man_man_hitbox",content), ((int)position.X, (int)position.Y), 0), (int)position.X, (int)position.Y, false);
+                    (int, int, Point) man_tupple = (AnimationConstruction.createHitbox("man_man_hitbox", content));
+                    the_Player = new Player(new Animation(AnimationConstruction.createAnimationTexture("man_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox((man_tupple.Item1,man_tupple.Item2), ((int)position.X, (int)position.Y), man_tupple.Item3, 0), (int)position.X, (int)position.Y, false);
                 break;
             case 3:
-                Sprite lava = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("lava_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox(AnimationConstruction.createHitbox("lava_hitbox", content), ((int)position.X, (int)position.Y), 1), true, position);
+                    (int, int, Point) lava_tupple = (AnimationConstruction.createHitbox("lava_hitbox", content));
+                    Sprite lava = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("lava_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox((lava_tupple.Item1, lava_tupple.Item2), ((int)position.X, (int)position.Y), lava_tupple.Item3, 1), true, position);
                 level_objects.Add(lava);
                 break;
             case 4:
-                Sprite end_point = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("door_sprite_sheet", graphicDevice, content), .20f, false), new((int)position.X, (int)position.Y, 32, 32, 5), true, position);
+                Sprite end_point = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("door_sprite_sheet", graphicDevice, content), .20f, false), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 5), true, position);
                 level_objects.Add(end_point);
                 break;
             default: break;
@@ -86,7 +88,10 @@ namespace FakeArcade2.GameStuff
             {
                 item.Update(gameTime);
             }
-            the_Player.Update(gameTime);
+
+            the_Player.Intersects(level_objects, the_Player.movement);
+            the_Player.Update(gameTime, _keyState);
+            
         }
 
         public void Draw(GameTime gameTime, SpriteBatch _spriteBatch, GraphicsDevice _graphicsDevice)
@@ -94,15 +99,15 @@ namespace FakeArcade2.GameStuff
             foreach(Sprite item in level_objects) 
             { 
                 item.Draw(gameTime, _spriteBatch);
-                item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
+                //item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             }
-
+            //the_Player.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             the_Player.Draw(gameTime, _spriteBatch);
         }
 
         public void Dispose()
         {
-
+            level_objects.Clear();
         }
     }
 }

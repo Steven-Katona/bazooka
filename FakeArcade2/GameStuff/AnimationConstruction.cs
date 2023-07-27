@@ -15,12 +15,12 @@ namespace FakeArcade2.GameStuff
     {
         static readonly string AnimationColor = "{R:217 G:87 B:99 A:255}";
         static readonly string HitboxColor = "{R:17 G:10 B:9 A:255}";
-        private static Dictionary<string, (int, int)> getHitbox;
+        private static Dictionary<string, (int, int, Point)> getHitbox;
         private static Dictionary<string, Texture2D[]> getTextureArray;
 
         static public void Initilize()
         {
-            getHitbox = new Dictionary<string, (int, int)> { };
+            getHitbox = new Dictionary<string, (int, int,Point)> { };
             getTextureArray = new Dictionary<string, Texture2D[]> { };
         }
 
@@ -94,9 +94,9 @@ namespace FakeArcade2.GameStuff
 
         
 
-        static public (int,int) createHitbox(string fileName, ContentManager content)
+        static public (int,int,Point) createHitbox(string fileName, ContentManager content)
         {
-            (int, int) value;
+            (int, int, Point) value;
             
             if (getHitbox.TryGetValue(fileName, out value))
             {
@@ -132,7 +132,7 @@ namespace FakeArcade2.GameStuff
                         }
                     }
                 }
-                value = new(lastpoint.X - firstpoint.X, lastpoint.Y - firstpoint.Y);
+                value = new(lastpoint.X - firstpoint.X, lastpoint.Y - firstpoint.Y, firstpoint);
                 getHitbox.Add(fileName, value);
                 return value;
             }
