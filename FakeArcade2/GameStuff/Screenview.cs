@@ -15,6 +15,7 @@ namespace FakeArcade2.GameStuff
         private int zoneWidth;
         private int zoneHeight;
         Optic focus;
+        Vector2 transition;
 
         public Screenview(Vector2 startingPosition,Optic focus, int maxWidth, int maxHeight, int worldWidth, int worldHeight ) 
         {
@@ -25,25 +26,22 @@ namespace FakeArcade2.GameStuff
             zoneHeight = worldHeight;
             this.startingPosition = startingPosition;
             this.focus = focus;
+            transition = new(0, 0);
 
         }
 
         public Matrix getOffsetTransformation() //act as an update to be called in the level update method
         {
-            Vector2 transition = new(0, 0);
-            if(focus.getPosition().X > offset_x_axis && focus.getPosition().X < (zoneWidth - offset_x_axis))
+            if (!focus.is_dead)
             {
-                transition.X = focus.getPosition().X - startingPosition.X;
+                if (transition != focus.getPosition())
+                {
+                    transition = focus.getPosition();
+                }
             }
-
-            if (focus.getPosition().Y > offset_y_axis && focus.getPosition().Y < (zoneHeight - offset_y_axis))
-            {
-                transition.X = focus.getPosition().Y - startingPosition.Y;
-            }
-
-
-
-            Matrix transform = Matrix.CreateTranslation(transition.X, transition.Y, 0);
+            
+            
+            Matrix transform = Matrix.CreateTranslation(-(transition.X - offset_x_axis), -(transition.Y - offset_y_axis), 0);
             return transform;
         }
 

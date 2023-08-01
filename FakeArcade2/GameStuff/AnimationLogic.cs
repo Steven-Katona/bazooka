@@ -15,8 +15,13 @@ namespace FakeArcade2.GameStuff
         private int frameIndex;
         private float time;
         private float draw_priority;
-        bool animationEnd;
+        private bool animationEnd;
         public float rotate { get; set; }
+
+        public bool is_animation_over()
+        {
+            return animationEnd;
+        }
 
         public void animationPlay(Animation the_current_Animation)
         {
@@ -78,6 +83,7 @@ namespace FakeArcade2.GameStuff
                     {
                         frameIndex = Math.Min((frameIndex + 1) % animation.myAnimation.Length, animation.myAnimation.Length - 1);
                         currentDrawnTexture = animation.myAnimation[frameIndex];
+                        animationEnd = true;
                     }
                     time = 0;
                 }

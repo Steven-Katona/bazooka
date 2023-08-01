@@ -16,6 +16,7 @@ namespace FakeArcade2
         KeyboardState key_state;
         int maxWidth;
         int maxHeight;
+        //float dummy = 0;
     
 
 
@@ -47,7 +48,7 @@ namespace FakeArcade2
         {
             
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            currentLevel = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/test2_level"), maxWidth, maxHeight);
+            currentLevel = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/test_level"), maxWidth, maxHeight);
             (int, int) dem = currentLevel.levelDimensions;
             _nativeRectangle = new(0, 0, dem.Item1, dem.Item2);
             _nativeTarget = new RenderTarget2D(GraphicsDevice, _nativeRectangle.Width, _nativeRectangle.Height);
@@ -76,9 +77,11 @@ namespace FakeArcade2
 
         protected override void Draw(GameTime gameTime)
         {
+
             GraphicsDevice.SetRenderTarget(_nativeTarget);
             GraphicsDevice.Clear(Color.Blue);
-            _spriteBatch.Begin(SpriteSortMode.FrontToBack);
+           //Matrix transform =  Microsoft.Xna.Framework.Matrix.CreateTranslation(0, dummy, 0);
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: currentLevel.getViewOffset());
 
             
 

@@ -11,11 +11,24 @@ namespace FakeArcade2.GameStuff
     internal class Optic
     {
         Animation myVisual;
+        public enum Collision : ushort
+        {
+            None = 0,
+            Danger = 1,
+            Solid = 2,
+            Jump = 3,
+            Sturdy = 4,
+            End = 5,
+            Safe = 6
+        };
+        public bool remove { get; set; }
         public bool immobile {get; set; }
+        public bool is_dead { get; set; }
         protected Vector2 myLocation;
         public Hitbox myAABB { get; set; }
-        AnimationLogic animator;
-        public Optic(Animation visual, Hitbox aabb, bool immobile, Vector2 myLocation)
+        protected AnimationLogic animator;
+        public Collision collisionBehavior { get; }
+        public Optic(Animation visual, Hitbox aabb, bool immobile, Vector2 myLocation, bool is_dead = false)
         {
             myVisual = visual;
             this.immobile = immobile;
@@ -23,6 +36,8 @@ namespace FakeArcade2.GameStuff
             myAABB = aabb;
             animator = new AnimationLogic();
             animator.animationPlay(myVisual);
+            collisionBehavior = (Collision)myAABB.myBehavior;
+            this.is_dead = is_dead;
         }
 
         public Vector2 getPosition()
@@ -59,6 +74,9 @@ namespace FakeArcade2.GameStuff
             myAABB.getBounds().X = newX;
             myAABB.getBounds().Y = newY;
         }
+
+        public Vector2 getVector()
+        { return myLocation; }
 
 
         static public double CalculateDiagonalMovement(double the_move)

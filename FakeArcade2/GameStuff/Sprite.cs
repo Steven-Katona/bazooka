@@ -10,16 +10,7 @@ namespace FakeArcade2.GameStuff
 {
     internal class Sprite : Optic
     {
-        enum behavior : ushort
-        {
-            none = 0,
-            danger = 1,
-            solid = 2,
-            jump = 3,
-            sturdy = 4,
-            end = 5,
-            safe = 6
-        };
+        
         public double horizontal {get; set;}
         public double vertical {get; set;}
         public (int, int) movement { get; set; }
@@ -57,6 +48,11 @@ namespace FakeArcade2.GameStuff
             {
                 preUpdate(gameTime);
                 moveMe(movement.Item1, movement.Item2);
+            }
+
+            if(animator.is_animation_over())
+            {
+                remove = true;
             }
         }
 

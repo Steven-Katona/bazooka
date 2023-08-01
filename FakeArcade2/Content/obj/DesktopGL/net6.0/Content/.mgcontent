@@ -12,11 +12,13 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/bazooka.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/block_fakeArcade2.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/door_sprite_sheet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/explosion_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/grenade.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/lava_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/man_sprite_sheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
