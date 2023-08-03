@@ -31,7 +31,7 @@ namespace FakeArcade2.GameStuff
             }
 
             this.animation = the_current_Animation;
-            frameIndex = 0;
+            frameIndex = this.animation.startFrame;
             time = 0;
             if (animation.myAnimation.Length == 1)
             {
@@ -41,7 +41,6 @@ namespace FakeArcade2.GameStuff
             else
             {
                 currentDrawnTexture = animation.myAnimation[0];
-                
             }
 
 
@@ -70,7 +69,7 @@ namespace FakeArcade2.GameStuff
 
             time += (float)_gameTime.ElapsedGameTime.TotalSeconds;
 
-            if(animation.myAnimation.GetType() == typeof(Texture2D[])) 
+            if(animation.myAnimation.GetType() == typeof(Texture2D[]))
             { 
                 while(time > animation.frameTime)
                 {
@@ -83,7 +82,9 @@ namespace FakeArcade2.GameStuff
                     {
                         frameIndex = Math.Min((frameIndex + 1) % animation.myAnimation.Length, animation.myAnimation.Length - 1);
                         currentDrawnTexture = animation.myAnimation[frameIndex];
-                        animationEnd = true;
+
+                        if (frameIndex == animation.myAnimation.Length - 1)
+                        { animationEnd = true; }
                     }
                     time = 0;
                 }

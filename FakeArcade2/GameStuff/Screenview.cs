@@ -36,7 +36,45 @@ namespace FakeArcade2.GameStuff
             {
                 if (transition != focus.getPosition())
                 {
-                    transition = focus.getPosition();
+
+                    if (focus.getPosition().X > offset_x_axis && focus.getPosition().X < (zoneWidth - offset_x_axis))
+                    {
+                        transition.X = focus.getPosition().X;
+                    }
+                    else
+                    {
+                        if (focus.getPosition().X > offset_x_axis)
+                        {
+                            transition.X = zoneWidth - offset_x_axis;
+                        }
+                        else
+                        {
+                            transition.X = offset_x_axis;
+                        }
+                    }
+
+                    if (focus.getPosition().Y > offset_y_axis && focus.getPosition().Y < (zoneHeight - offset_y_axis))
+                    {
+                        transition.Y = focus.getPosition().Y;
+                    }
+                    else
+                    {
+                        if (focus.getPosition().Y > offset_y_axis)
+                        {
+                            transition.Y = zoneHeight - offset_y_axis;
+                        }
+                        else
+                        {
+                            transition.Y = offset_y_axis;
+                        }
+                    }
+
+                    //transition = focus.getPosition();
+                }
+
+                if(focus.getPosition().Y > zoneWidth)
+                {
+                    focus.is_dead= true;
                 }
             }
             

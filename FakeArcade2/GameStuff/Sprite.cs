@@ -10,11 +10,12 @@ namespace FakeArcade2.GameStuff
 {
     internal class Sprite : Optic
     {
-        
+        public (int, int) displacement { get; set; }
         public double horizontal {get; set;}
         public double vertical {get; set;}
         public (int, int) movement { get; set; }
-        public Sprite(Animation myVisual, Hitbox aabb, bool immobile, Vector2 myLocation) : base(myVisual, aabb, immobile, myLocation) 
+
+        public Sprite(Animation myVisual, Hitbox aabb, bool immobile, Vector2 myLocation) : base(myVisual, aabb, immobile, myLocation)
         {
             
         }
@@ -36,13 +37,17 @@ namespace FakeArcade2.GameStuff
             {
                 y_move = y_move * -1;
             }
+
             
             movement = ((int)x_move, (int)y_move);
         }
 
+        public void setDisplacement((int,int) newDisplacement)
+        {
+            this.displacement = newDisplacement;
+        }
         public void Update(GameTime gameTime)
         {
-            
 
             if (!this.immobile)
             {
@@ -50,10 +55,6 @@ namespace FakeArcade2.GameStuff
                 moveMe(movement.Item1, movement.Item2);
             }
 
-            if(animator.is_animation_over())
-            {
-                remove = true;
-            }
         }
 
 

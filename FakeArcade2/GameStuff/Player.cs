@@ -12,6 +12,8 @@ namespace FakeArcade2.GameStuff
         public (int, int) projectile_path { get; set; }
         bool can_Shoot;
         public bool shoot_grenade {get; set;}
+        public (bool,int) hasKey = (false,0);
+         
 
         public Player(Animation face, Hitbox aabb, int x, int y , bool immobile = false ): base(face, aabb, immobile, new Vector2(x,y))
         {
@@ -24,19 +26,20 @@ namespace FakeArcade2.GameStuff
 
         public void Update(GameTime gameTime, KeyboardState state)
         {
+       
             if (!is_dead)
             {
                 if (state.IsKeyDown(Keys.NumPad6))
                 {
                     launchingPosition = new (this.myAABB.myBounds.Right,this.myAABB.myBounds.Center.Y);
                     projectile_path = (1,0);
-                    horizontal += 5;
+                    horizontal += 6;
                 }
 
                 if (state.IsKeyDown(Keys.NumPad4))
                 {
                     launchingPosition = new(this.myAABB.myBounds.Left, this.myAABB.myBounds.Center.Y);
-                    horizontal -= 5;
+                    horizontal -= 6;
                     projectile_path = (-1, 0);
                 }
 

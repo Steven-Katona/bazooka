@@ -15,6 +15,7 @@ namespace FakeArcade2.GameStuff
             in_air = true;
             horizontal = direction_path.Item1 * speed;
             vertical = direction_path.Item2 * speed;
+            setDisplacement(((int)(horizontal/ 4), (int)(vertical/ 4)));
         }
 
         public new void Update(GameTime gameTime)
@@ -35,17 +36,21 @@ namespace FakeArcade2.GameStuff
 
         public new void Intersects(List<Optic> level_objects, (int, int) movement)
         {
-            foreach (Sprite obj in level_objects)
+            foreach (Optic obj in level_objects)
             {
-                if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds) && !is_exploding)
+                if (!(obj.collisionBehavior == Collision.Safe))
                 {
-                    animator.animationPlay(explosion);
-                    this.setPostion((int)this.getPosition().X - 29, (int)this.getPosition().Y - 29);
-                    myAABB = new((int)this.getPosition().X, (int)this.getPosition().Y, 64, 64, new Point(0, 0), 3);
-                    is_exploding = true;
-                    in_air = false;
-                    horizontal = 0;
-                    vertical = 0;
+                    if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds) && !is_exploding)
+                    {
+                        animator.animationPlay(explosion);
+                        this.setPostion((int)this.getPosition().X - 23, (int)this.getPosition().Y - 23);
+                        myAABB = new((int)this.getPosition().X, (int)this.getPosition().Y, 64, 64, new Point(0, 0), 0);
+                        collisionBehavior = Collision.Jump;
+                        is_exploding = true;
+                        in_air = false;
+                        horizontal = 0;
+                        vertical = 0;
+                    }
                 }
             }
         }

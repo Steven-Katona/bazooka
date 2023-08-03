@@ -19,7 +19,8 @@ namespace FakeArcade2.GameStuff
             Jump = 3,
             Sturdy = 4,
             End = 5,
-            Safe = 6
+            Safe = 6,
+            Key = 7
         };
         public bool remove { get; set; }
         public bool immobile {get; set; }
@@ -27,7 +28,8 @@ namespace FakeArcade2.GameStuff
         protected Vector2 myLocation;
         public Hitbox myAABB { get; set; }
         protected AnimationLogic animator;
-        public Collision collisionBehavior { get; }
+        public Collision collisionBehavior { get; set; }
+        public bool draw_me = true;
         public Optic(Animation visual, Hitbox aabb, bool immobile, Vector2 myLocation, bool is_dead = false)
         {
             myVisual = visual;
@@ -45,7 +47,10 @@ namespace FakeArcade2.GameStuff
             return myLocation;
         }
 
-        
+        public void setToRemove()
+        {
+            remove = true;
+        }
 
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {

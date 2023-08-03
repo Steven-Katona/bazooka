@@ -13,12 +13,14 @@ namespace FakeArcade2.GameStuff
         public Texture2D staticAnimation { get; set; }
         public float frameTime { get; set; }
         public bool isLooping { get; set; }
+        public int startFrame { get; set; }
 
-        public Animation(Texture2D[] animationFrames, float frameTime, bool isLooping) 
+        public Animation(Texture2D[] animationFrames, float frameTime, bool isLooping, int startFrame = 0) 
         { 
             myAnimation = animationFrames;
             this.frameTime = frameTime;
             this.isLooping = isLooping;
+            this.startFrame = startFrame;
         }
 
         public Animation(Texture2D animationFrames, float frameTime, bool isLooping)

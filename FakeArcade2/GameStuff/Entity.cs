@@ -12,7 +12,7 @@ namespace FakeArcade2.GameStuff
         
         public Entity(Animation visual, Hitbox aabb, bool immobile, Vector2 myLocation) : base(visual, aabb, immobile, myLocation)
         {
-
+ 
         }
 
         public void setDead()
@@ -23,10 +23,40 @@ namespace FakeArcade2.GameStuff
         public void Intersects(List<Optic> level_objects, (int, int) movement)
         {
             bool on_ground = false;
-            foreach (Sprite obj in level_objects)
+            foreach (Optic obj in level_objects)
             {
+                if (this as Player != null)
+                {
+                    if (obj as Key != null)
+                    {
+                        if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
+                        {
+                            Key thatKey = (Key)obj;
+                            Player play = (Player)this;
+                            play.hasKey = (true, thatKey.key_value);
+                            thatKey.remove = true;
+                        }
+                    }
+                }
+
+                if (obj as Sprite != null)
+                {
+                    Sprite newObj = (Sprite)obj;
+                    if (newObj.collisionBehavior == Collision.Jump)
+                    {
+                        if (this.myAABB.myBounds.Intersects(newObj.myAABB.myBounds))
+                        {
+                            this.horizontal += -newObj.displacement.Item1;
+                            this.vertical += -newObj.displacement.Item2;
+                          
+                        }
+                    }
+                }
+
                 if (obj.collisionBehavior == Collision.Solid || obj.collisionBehavior == Collision.Sturdy)
                 {
+                    
+
                     if (touchingLeft(obj.myAABB, movement.Item1))
                     {
                         if (horizontal < 0)
@@ -77,10 +107,13 @@ namespace FakeArcade2.GameStuff
                             moveMe(0f, -(this.myAABB.myBounds.Top - obj.myAABB.myBounds.Bottom));
                         }
                     }
+
+
                 }
 
                 if (!this.is_dead)
                 {
+                    
                     if (obj.collisionBehavior == Collision.Danger)
                     {
                         if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
@@ -90,8 +123,7 @@ namespace FakeArcade2.GameStuff
                     }
                 }
 
-
-
+                
             }
             
 

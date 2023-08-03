@@ -14,19 +14,6 @@ namespace FakeArcade2.GameStuff
     internal class Hitbox
     {
 
-        public enum Collision : ushort
-        {
-            None = 0,
-            Danger = 1,
-            Solid = 2,
-            Jump = 3,
-            Sturdy = 4,
-            End = 5,
-            Safe = 6
-        };
-
-        public Collision collisionBehavior { get; set; }
-
         public Rectangle myBounds;
         Texture2D drawnBox;
         public Vector2 myCenter {get; set;}
