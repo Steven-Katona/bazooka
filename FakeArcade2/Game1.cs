@@ -16,6 +16,7 @@ namespace FakeArcade2
         KeyboardState key_state;
         int maxWidth;
         int maxHeight;
+        int startingLevel = 0;
 
         public Game1()
         {
@@ -45,7 +46,7 @@ namespace FakeArcade2
         {
             
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            currentLevel = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/0"), maxWidth, maxHeight);
+            currentLevel = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/"+ startingLevel.ToString()), maxWidth, maxHeight);
             (int, int) dem = currentLevel.levelDimensions;
             _nativeRectangle = new(0, 0, dem.Item1, dem.Item2);
             _nativeTarget = new RenderTarget2D(GraphicsDevice, _nativeRectangle.Width, _nativeRectangle.Height);
