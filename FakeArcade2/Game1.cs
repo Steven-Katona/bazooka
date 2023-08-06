@@ -13,10 +13,9 @@ namespace FakeArcade2
         Rectangle boxingRect;
         Rectangle _nativeRectangle;
         Level currentLevel;
-        KeyboardState key_state;
         int maxWidth;
         int maxHeight;
-        int startingLevel = 0;
+        int Level = 0;
 
         public Game1()
         {
@@ -46,7 +45,7 @@ namespace FakeArcade2
         {
             
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            currentLevel = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/"+ startingLevel.ToString()), maxWidth, maxHeight);
+            currentLevel = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/"+ Level.ToString()), maxWidth, maxHeight);
             (int, int) dem = currentLevel.levelDimensions;
             _nativeRectangle = new(0, 0, dem.Item1, dem.Item2);
             _nativeTarget = new RenderTarget2D(GraphicsDevice, _nativeRectangle.Width, _nativeRectangle.Height);
@@ -67,6 +66,20 @@ namespace FakeArcade2
 
             var state = Keyboard.GetState();
 
+            if(currentLevel.the_Player.at_Exit)
+            {
+                Level += currentLevel.the_Player.exit_found;
+                currentLevel.Dispose();
+                
+                try
+                {
+                    currentLevel = new Level(Services, Content, GraphicsDevice, Content.Load<Texture2D>("level2d/" + Level.ToString()), maxWidth, maxHeight);
+                }
+                catch
+                {
+                    Exit();
+                }
+            }
             currentLevel.Update(gameTime, state);
             // TODO: Add your update logic here
 
@@ -78,10 +91,7 @@ namespace FakeArcade2
 
             GraphicsDevice.SetRenderTarget(_nativeTarget);
             GraphicsDevice.Clear(Color.Blue);
-           //Matrix transform =  Microsoft.Xna.Framework.Matrix.CreateTranslation(0, dummy, 0);
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: currentLevel.getViewOffset());
-
-            
 
             currentLevel.Draw(gameTime, _spriteBatch, GraphicsDevice);
 

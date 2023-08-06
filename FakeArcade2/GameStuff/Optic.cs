@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FakeArcade2.GameStuff
 {
@@ -25,6 +22,15 @@ namespace FakeArcade2.GameStuff
         public bool remove { get; set; }
         public bool immobile {get; set; }
         public bool is_dead { get; set; }
+        public bool breakable { get; set; }
+        public int trigger { get; set; }
+        public int true_collision { get; set; }
+        public int my_exit_code { get; set; }
+        public bool appear_disappear { get; set; }
+        public bool fog { get; set; }
+        public bool suprise { get; set; }
+  
+
         protected Vector2 myLocation;
         public Hitbox myAABB { get; set; }
         protected AnimationLogic animator;
@@ -40,6 +46,8 @@ namespace FakeArcade2.GameStuff
             animator.animationPlay(myVisual);
             collisionBehavior = (Collision)myAABB.myBehavior;
             this.is_dead = is_dead;
+            breakable = false;
+            my_exit_code = 1;
         }
 
         public Vector2 getPosition()
@@ -89,6 +97,48 @@ namespace FakeArcade2.GameStuff
             double amount = the_move / 2;
             amount = Math.Sqrt(amount);
             return amount;
+        }
+
+        public void Optic_behavior_alteration(int code, int my_collision,int my_trigger)
+        {
+            this.trigger = my_trigger;
+            this.true_collision = my_collision;
+            switch(code)
+            {
+                case 1:
+                    draw_me = false;
+                    break;
+                case 2:
+                    breakable = true;
+                    break;
+                case 3:
+                    draw_me = false;
+                    collisionBehavior = Collision.None;
+                    break;
+                case 4:
+                    appear_disappear = true;
+                    draw_me = false;
+                    break;
+                case 5:
+                    appear_disappear = true;
+                    break;
+                case 6:
+                    fog = true;
+                    draw_me = false;
+                    break;
+                case 7:
+                    suprise = true;
+                    draw_me = false;
+                    break;
+                case 8:
+                    draw_me = false;
+                    true_collision = this.myAABB.myBehavior;
+                    collisionBehavior = Collision.None;
+                    appear_disappear = true;
+                    break;
+
+                default: break;
+            }
         }
     }
 }

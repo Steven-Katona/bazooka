@@ -12,7 +12,10 @@ namespace FakeArcade2.GameStuff
         public (int, int) projectile_path { get; set; }
         bool can_Shoot;
         public bool shoot_grenade {get; set;}
-        public (bool,int) hasKey = (false,0);
+        public int hasKey = 0;
+        public int exit_found { get; set; }
+
+        public bool at_Exit;
          
 
         public Player(Animation face, Hitbox aabb, int x, int y , bool immobile = false ): base(face, aabb, immobile, new Vector2(x,y))
@@ -22,7 +25,10 @@ namespace FakeArcade2.GameStuff
             launchingPosition = new Point(this.myAABB.myBounds.Right, (int)this.getPosition().Y);
             shoot_grenade = false;
             can_Shoot = true;
+            at_Exit = false;
         }
+
+        public override void Update(GameTime gameTime){} //ignore, unreachable
 
         public void Update(GameTime gameTime, KeyboardState state)
         {
@@ -128,7 +134,7 @@ namespace FakeArcade2.GameStuff
 
 
 
-            Update(gameTime);
+            ((Sprite)(this)).Update(gameTime);
         }
     }
 }

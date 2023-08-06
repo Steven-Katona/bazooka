@@ -33,9 +33,22 @@ namespace FakeArcade2.GameStuff
             myBehavior = behavior;
         }
 
+        public Hitbox((int, int, Point) Dimension_Offset, Vector2 position, int behavior)
+        {
+            myBounds = new((int)position.X + Dimension_Offset.Item3.X, (int)position.Y + Dimension_Offset.Item3.Y, Dimension_Offset.Item1, Dimension_Offset.Item2);
+            myCenter = new(myBounds.Center.X, myBounds.Center.Y);
+            myBehavior = behavior;
+        }
         public ref Rectangle getBounds()
         {
             return ref myBounds;
+        }
+
+        public void set_Offset(Point offset)
+        {
+            this.myBounds.X += offset.X;
+            this.myBounds.Y += offset.Y;
+
         }
 
         public bool isDrawnBox()

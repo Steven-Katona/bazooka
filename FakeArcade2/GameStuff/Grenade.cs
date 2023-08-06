@@ -18,7 +18,7 @@ namespace FakeArcade2.GameStuff
             setDisplacement(((int)(horizontal/ 4), (int)(vertical/ 4)));
         }
 
-        public new void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if(animator.is_animation_over())
             {
@@ -38,7 +38,7 @@ namespace FakeArcade2.GameStuff
         {
             foreach (Optic obj in level_objects)
             {
-                if (!(obj.collisionBehavior == Collision.Safe))
+                if ((obj.collisionBehavior != Collision.Safe && obj.collisionBehavior != Collision.None))
                 {
                     if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds) && !is_exploding)
                     {
@@ -50,6 +50,10 @@ namespace FakeArcade2.GameStuff
                         in_air = false;
                         horizontal = 0;
                         vertical = 0;
+                        if (obj.breakable == true)
+                        {
+                            obj.remove = true;
+                        }
                     }
                 }
             }

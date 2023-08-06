@@ -1,18 +1,19 @@
 ﻿
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System;
 
 
 namespace FakeArcade2.GameStuff
 {
 
-    internal class Entity : Sprite
+    abstract internal class Entity : Sprite
     {
         public bool in_air { get; set; }
-        
+
         public Entity(Animation visual, Hitbox aabb, bool immobile, Vector2 myLocation) : base(visual, aabb, immobile, myLocation)
         {
- 
+            
         }
 
         public void setDead()
@@ -20,21 +21,76 @@ namespace FakeArcade2.GameStuff
             this.is_dead = true;
         }
 
+        public new abstract void Update(GameTime _gameTime);
+
         public void Intersects(List<Optic> level_objects, (int, int) movement)
         {
             bool on_ground = false;
+
+
             foreach (Optic obj in level_objects)
             {
                 if (this as Player != null)
                 {
+                    int currentKey = ((Player)this).hasKey;
+
+                    if(obj.suprise && this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
+                    {
+                        obj.draw_me = true;
+                    }
+
+                    if (obj.appear_disappear)
+                    {
+                        if(obj.draw_me == false)
+                        {
+                            if (obj.trigger == currentKey)
+                            {
+                                obj.draw_me = true;
+                                obj.collisionBehavior = (Collision)obj.true_collision;
+                                obj.appear_disappear = false;
+                            }
+                        }
+                        else
+                        {
+                            if (obj.trigger == currentKey)
+                            {
+                                obj.remove = true;
+                                obj.appear_disappear = false;
+                            }
+                        }
+                    }
+
+                    if(obj.fog)
+                    {
+                        if(Math.Abs((double)(obj.getPosition().X - this.getPosition().X)) < 80 && Math.Abs((double)(obj.getPosition().Y - this.getPosition().Y)) < 80)
+                        {
+                            obj.draw_me = true;
+                            obj.fog = false;
+                        }
+                    }
+
+                   
+
                     if (obj as Key != null)
                     {
                         if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
                         {
                             Key thatKey = (Key)obj;
                             Player play = (Player)this;
-                            play.hasKey = (true, thatKey.key_value);
+                            play.hasKey = thatKey.key_value;
                             thatKey.remove = true;
+                        }
+                    }
+
+
+
+                    if(obj.collisionBehavior == Collision.End)
+                    {
+                        if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
+                        {
+                            Player play = (Player)this;
+                            play.exit_found = obj.my_exit_code; 
+                            play.at_Exit = true;
                         }
                     }
                 }
@@ -52,6 +108,7 @@ namespace FakeArcade2.GameStuff
                         }
                     }
                 }
+
 
                 if (obj.collisionBehavior == Collision.Solid || obj.collisionBehavior == Collision.Sturdy)
                 {
@@ -135,6 +192,7 @@ namespace FakeArcade2.GameStuff
             {
                 in_air = true;
             }
+
         }
 
     }

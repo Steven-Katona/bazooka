@@ -53,15 +53,15 @@ namespace FakeArcade2.GameStuff
                         }
                     }
 
-                    if (focus.getPosition().Y > offset_y_axis && focus.getPosition().Y < (zoneHeight - offset_y_axis))
+                    if (focus.getPosition().Y > offset_y_axis - 32 && focus.getPosition().Y < (zoneHeight - offset_y_axis))
                     {
-                        transition.Y = focus.getPosition().Y;
+                        transition.Y = focus.getPosition().Y + 32;
                     }
                     else
                     {
                         if (focus.getPosition().Y > offset_y_axis)
                         {
-                            transition.Y = zoneHeight - offset_y_axis;
+                            transition.Y = zoneHeight - offset_y_axis + 32;
                         }
                         else
                         {
