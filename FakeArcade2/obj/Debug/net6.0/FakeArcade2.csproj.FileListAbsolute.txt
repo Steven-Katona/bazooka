@@ -43,3 +43,5 @@ C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Debug\net6.0\FakeArcade2
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Debug\net6.0\FakeArcade2.genruntimeconfig.cache
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Debug\net6.0\ref\FakeArcade2.dll
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\1.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\2.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\3.xnb

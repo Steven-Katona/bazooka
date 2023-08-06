@@ -9,6 +9,8 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/hitbox2d/man_man_hitbox.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/0.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/1.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/2.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/3.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/bazooka.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/block_fakeArcade2.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/block_locked.png</File>
@@ -25,6 +27,8 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/man_sprite_sheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
