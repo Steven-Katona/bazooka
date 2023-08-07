@@ -17,7 +17,8 @@ namespace FakeArcade2.GameStuff
             Sturdy = 4,
             End = 5,
             Safe = 6,
-            Key = 7
+            Key = 7,
+            Checkpoint = 8
         };
         public bool remove { get; set; }
         public bool immobile {get; set; }
@@ -86,6 +87,7 @@ namespace FakeArcade2.GameStuff
             myLocation.Y = newY;
             myAABB.getBounds().X = newX;
             myAABB.getBounds().Y = newY;
+            myAABB.set_Offset(myAABB.my_offset);
         }
 
         public Vector2 getVector()

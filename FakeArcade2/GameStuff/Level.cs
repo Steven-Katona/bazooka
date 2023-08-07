@@ -34,7 +34,7 @@ namespace FakeArcade2.GameStuff
             Key = 7
         };
 
-        Vector2 PlayerStart;
+ 
         Point Player_Offset;
         public (int, int) levelDimensions { get; set; }
         public Level(IServiceProvider service, ContentManager Content, GraphicsDevice _graphicsDevice, Texture2D colorMap, int maxWidth, int maxHeight)
@@ -45,7 +45,8 @@ namespace FakeArcade2.GameStuff
                 { 1,2 }, //player
                 { 254,3 }, //lava
                 { 20, 4}, //end point
-                { 150, 6} //key
+                { 150, 6}, //key
+                { 200, 7} // checkPoint
             };
             graphicDevice = _graphicsDevice;
             content = Content;
@@ -108,7 +109,7 @@ namespace FakeArcade2.GameStuff
                 case 2:
                     (int, int, Point) man_tupple = (AnimationConstruction.createHitbox("man_man_hitbox", content));
                     the_Player = new Player(new Animation(AnimationConstruction.createAnimationTexture("man_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox((man_tupple.Item1,man_tupple.Item2), ((int)position.X, (int)position.Y), man_tupple.Item3, 6), (int)position.X, (int)position.Y, false);
-                    PlayerStart = position;
+                    the_Player.PlayerStart = position;
                     Player_Offset = man_tupple.Item3;
                     initilizeView();
                     break;
@@ -147,6 +148,17 @@ namespace FakeArcade2.GameStuff
                     }
                     level_objects.Add(newKey);
                     break;
+                case 7:
+                    Sprite check = new (new Animation(AnimationConstruction.createAnimationTexture("flag_sprite_sheet", graphicDevice, content), .30f, true), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 8), true, position);
+                    if (lookup_color_data != 0)
+                    {
+                        Color special_level_data = lookupValues[lookup_color_data];
+                        check.Optic_behavior_alteration(special_level_data.R, special_level_data.G, special_level_data.B);
+                    }
+                    level_objects.Add(check);
+                    break;
+
+                default: break;
             }
         }
 
@@ -162,13 +174,6 @@ namespace FakeArcade2.GameStuff
 
         public void Update(GameTime gameTime, KeyboardState _keyState)
         {
-
-            if(the_Player.is_dead == true && _keyState.IsKeyDown(Keys.R))
-            {
-                the_Player.is_dead = false;
-                the_Player.setPostion((int)PlayerStart.X, (int)PlayerStart.Y);
-                the_Player.myAABB.set_Offset(Player_Offset);
-            }
 
             foreach(Optic item in level_objects)
             {
@@ -223,7 +228,7 @@ namespace FakeArcade2.GameStuff
                 {
                     item.Draw(gameTime, _spriteBatch);
                 }
-                //item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
+                item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             }
             //the_Player.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             the_Player.Draw(gameTime, _spriteBatch);

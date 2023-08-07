@@ -17,6 +17,7 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/door_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/explosion_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/fire_bug_sprite_sheet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/flag_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/fly_fall_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/fly_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/grenade.png</File>
@@ -27,6 +28,7 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/man_sprite_sheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

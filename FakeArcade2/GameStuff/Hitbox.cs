@@ -18,12 +18,14 @@ namespace FakeArcade2.GameStuff
         Texture2D drawnBox;
         public Vector2 myCenter {get; set;}
         public int myBehavior { get; }
+        public Point my_offset { get; }
         
         public Hitbox(int x, int y, int width, int height, Point offset, ushort behavior) 
         { 
             myBounds = new(x + offset.X, y + offset.Y, width, height);
             myCenter = new(myBounds.Center.X, myBounds.Center.Y);
             myBehavior = behavior;
+            my_offset = offset;
         }
 
         public Hitbox((int,int) newDimensions, (int, int) location, Point offset, int behavior)
@@ -31,6 +33,7 @@ namespace FakeArcade2.GameStuff
             myBounds = new(location.Item1 + offset.X, location.Item2 + offset.Y, newDimensions.Item1, newDimensions.Item2);
             myCenter = new(myBounds.Center.X, myBounds.Center.Y);
             myBehavior = behavior;
+            my_offset = offset;
         }
 
         public Hitbox((int, int, Point) Dimension_Offset, Vector2 position, int behavior)
@@ -38,6 +41,7 @@ namespace FakeArcade2.GameStuff
             myBounds = new((int)position.X + Dimension_Offset.Item3.X, (int)position.Y + Dimension_Offset.Item3.Y, Dimension_Offset.Item1, Dimension_Offset.Item2);
             myCenter = new(myBounds.Center.X, myBounds.Center.Y);
             myBehavior = behavior;
+            my_offset = Dimension_Offset.Item3;
         }
         public ref Rectangle getBounds()
         {

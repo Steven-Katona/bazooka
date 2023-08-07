@@ -39,24 +39,27 @@ namespace FakeArcade2.GameStuff
                         obj.draw_me = true;
                     }
 
-                    if (obj.appear_disappear)
+                    if (obj.trigger == currentKey)
                     {
-                        if(obj.draw_me == false)
+                        if (obj.appear_disappear)
                         {
-                            if (obj.trigger == currentKey)
+                            if (obj.draw_me == false)
                             {
                                 obj.draw_me = true;
                                 obj.collisionBehavior = (Collision)obj.true_collision;
                                 obj.appear_disappear = false;
                             }
-                        }
-                        else
-                        {
-                            if (obj.trigger == currentKey)
+                            else
                             {
                                 obj.remove = true;
                                 obj.appear_disappear = false;
                             }
+                        }
+
+                        if(obj.collisionBehavior == Collision.Checkpoint)
+                        {
+                            obj.remove = true;
+                            ((Player)this).PlayerStart = obj.getPosition();
                         }
                     }
 
@@ -69,9 +72,16 @@ namespace FakeArcade2.GameStuff
                         }
                     }
 
-                   
+                    if(obj.collisionBehavior == Collision.Checkpoint)
+                    {
+                        if(this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
+                        {
+                            obj.remove = true;
+                            ((Player)this).PlayerStart = obj.getPosition();
+                        }
+                    }
 
-                    if (obj as Key != null)
+                    if (obj.collisionBehavior == Collision.Key)
                     {
                         if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
                         {
@@ -81,8 +91,6 @@ namespace FakeArcade2.GameStuff
                             thatKey.remove = true;
                         }
                     }
-
-
 
                     if(obj.collisionBehavior == Collision.End)
                     {
@@ -95,7 +103,7 @@ namespace FakeArcade2.GameStuff
                     }
                 }
 
-                if (obj as Sprite != null)
+                if (obj as Sprite != null) //I don't think this is the right approach
                 {
                     Sprite newObj = (Sprite)obj;
                     if (newObj.collisionBehavior == Collision.Jump)
@@ -170,7 +178,6 @@ namespace FakeArcade2.GameStuff
 
                 if (!this.is_dead)
                 {
-                    
                     if (obj.collisionBehavior == Collision.Danger)
                     {
                         if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))

@@ -16,7 +16,8 @@ namespace FakeArcade2.GameStuff
         public int exit_found { get; set; }
 
         public bool at_Exit;
-         
+        public Vector2 PlayerStart { get; set; }
+
 
         public Player(Animation face, Hitbox aabb, int x, int y , bool immobile = false ): base(face, aabb, immobile, new Vector2(x,y))
         {
@@ -26,6 +27,7 @@ namespace FakeArcade2.GameStuff
             shoot_grenade = false;
             can_Shoot = true;
             at_Exit = false;
+            PlayerStart = this.getPosition();
         }
 
         public override void Update(GameTime gameTime){} //ignore, unreachable
@@ -125,7 +127,13 @@ namespace FakeArcade2.GameStuff
                 }
             }
 
-            
+            if (this.is_dead == true && state.IsKeyDown(Keys.R))
+            {
+                this.is_dead = false;
+                this.setPostion((int)PlayerStart.X, (int)PlayerStart.Y);
+            }
+
+
 
             if (in_air)
             {
