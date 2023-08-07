@@ -138,6 +138,8 @@ namespace FakeArcade2.GameStuff
                     collisionBehavior = Collision.None;
                     appear_disappear = true;
                     break;
+                case 9:
+                    break;
 
                 default: break;
             }

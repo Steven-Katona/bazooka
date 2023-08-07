@@ -228,7 +228,7 @@ namespace FakeArcade2.GameStuff
                 {
                     item.Draw(gameTime, _spriteBatch);
                 }
-                item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
+                //item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             }
             //the_Player.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             the_Player.Draw(gameTime, _spriteBatch);

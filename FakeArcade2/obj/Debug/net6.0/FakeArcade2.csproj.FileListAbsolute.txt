@@ -46,3 +46,4 @@ C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\lev
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\2.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\3.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\flag_sprite_sheet.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\4.xnb

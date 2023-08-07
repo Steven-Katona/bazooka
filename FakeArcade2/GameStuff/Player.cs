@@ -129,6 +129,8 @@ namespace FakeArcade2.GameStuff
 
             if (this.is_dead == true && state.IsKeyDown(Keys.R))
             {
+                this.horizontal = 0;
+                this.vertical = 0;
                 this.is_dead = false;
                 this.setPostion((int)PlayerStart.X, (int)PlayerStart.Y);
             }
