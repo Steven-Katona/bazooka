@@ -4,10 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FakeArcade2.GameStuff
 {
@@ -28,12 +24,6 @@ namespace FakeArcade2.GameStuff
         int maxLevelHeight;
         int lava_offset = 0;
         bool endLevel = false;
-        enum Combinations
-        {
-
-            Key = 7
-        };
-
  
         Point Player_Offset;
         public (int, int) levelDimensions { get; set; }
@@ -42,11 +32,12 @@ namespace FakeArcade2.GameStuff
             item_lookup = new Dictionary<int, int>()
             {
                 { 255,1}, //block
-                { 1,2 }, //player
-                { 254,3 }, //lava
+                { 1, 2}, //player
+                { 254,3}, //lava
                 { 20, 4}, //end point
                 { 150, 6}, //key
-                { 200, 7} // checkPoint
+                { 200, 7}, //checkPoint
+                { 230, 8} //jumpingMan
             };
             graphicDevice = _graphicsDevice;
             content = Content;
@@ -61,7 +52,7 @@ namespace FakeArcade2.GameStuff
             this.maxWidth = maxWidth;
             this.maxHeight = maxHeight;
             maxLevelWidth = colorMap.Width * 32;
-            maxLevelHeight = (colorMap.Height * 32 - 32); //32 is now 31?
+            maxLevelHeight = ((colorMap.Height * 32) - 32);
             lookupValues = new Color[maxWidth];
 
             levelDimensions = (colorMap.Width * 32, (colorMap.Height * 32));
@@ -109,8 +100,10 @@ namespace FakeArcade2.GameStuff
                 case 2:
                     (int, int, Point) man_tupple = (AnimationConstruction.createHitbox("man_man_hitbox", content));
                     the_Player = new Player(new Animation(AnimationConstruction.createAnimationTexture("man_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox((man_tupple.Item1,man_tupple.Item2), ((int)position.X, (int)position.Y), man_tupple.Item3, 6), (int)position.X, (int)position.Y, false);
-                    the_Player.PlayerStart = position;
+                    the_Player.myStart = position;
                     Player_Offset = man_tupple.Item3;
+                    Animation[] man_closetContent = { new Animation(AnimationConstruction.createAnimationTexture("jump_fire_sprite_sheet", graphicDevice, content), .20f, true) };
+                    the_Player.PopulateCloset(man_closetContent);
                     initilizeView();
                     break;
                 case 3:
@@ -157,7 +150,20 @@ namespace FakeArcade2.GameStuff
                     }
                     level_objects.Add(check);
                     break;
-
+                case 8:
+                    JumpingMan jumping = new(new Animation(AnimationConstruction.createAnimationTexture("jumping_sprite_sheet", graphicDevice, content), .30f, true), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 9), false, position);
+                    if (lookup_color_data != 0)
+                    {
+                        
+                        Color special_level_data = lookupValues[lookup_color_data];
+                        Color special_option_data = lookupValues[lookup_color_data - 1];
+                        jumping.SpecialOptions(special_option_data.R, special_option_data.G);
+                        jumping.Optic_behavior_alteration(special_level_data.R, special_level_data.G, special_level_data.B);
+                    }
+                    Animation[] jump_closetContent = { new Animation(AnimationConstruction.createAnimationTexture("jump_fire_sprite_sheet", graphicDevice, content), .20f, true) };
+                    jumping.PopulateCloset(jump_closetContent);
+                    level_objects.Add(jumping);
+                    break;
                 default: break;
             }
         }
@@ -187,10 +193,15 @@ namespace FakeArcade2.GameStuff
                     if (item as Entity != null)
                     {
                         if (item as Grenade != null)
+                        { 
+                            ((Grenade)item).Update(gameTime);
+                            ((Grenade)item).Intersects(level_objects, ((Grenade)item).movement);
+                        }
+
+                        if(item as Enemy != null)
                         {
-                            Grenade grenade = (Grenade)item;
-                            grenade.Update(gameTime);
-                            grenade.Intersects(level_objects, grenade.movement);
+                            ((Enemy)item).Intersects(level_objects, ((Enemy)item).movement);
+                            ((Enemy)item).Update(gameTime);
                         }
                     }
                 }
@@ -226,6 +237,7 @@ namespace FakeArcade2.GameStuff
             {
                 if (item.draw_me)
                 {
+                    //if(item.getPosition().X)
                     item.Draw(gameTime, _spriteBatch);
                 }
                 //item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);

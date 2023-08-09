@@ -10,10 +10,41 @@ namespace FakeArcade2.GameStuff
     abstract internal class Entity : Sprite
     {
         public bool in_air { get; set; }
-
+        public Vector2 myStart { get; set; }
+        public struct AnimationCloset
+        {
+            public Animation starting_Animation;
+            public Animation going_Left;
+            public Animation going_Right;
+            public Animation air_Born;
+            public Animation dead_and_on_Fire;
+        };
+        AnimationCloset myCloset = new AnimationCloset();
         public Entity(Animation visual, Hitbox aabb, bool immobile, Vector2 myLocation) : base(visual, aabb, immobile, myLocation)
         {
-            
+            myStart = myLocation;
+        }
+
+        public void PopulateCloset(params Animation[] theAnimations)
+        {
+            myCloset.starting_Animation = this.myVisual;
+            switch (theAnimations.Length)
+            {
+                case 1:
+                    myCloset.dead_and_on_Fire = theAnimations[0];
+                    break;
+                case 2:
+                    myCloset.dead_and_on_Fire = theAnimations[0];
+                    myCloset.air_Born = theAnimations[1];
+                    break;
+                case 4:
+                    myCloset.dead_and_on_Fire = theAnimations[0];
+                    myCloset.air_Born = theAnimations[1];
+                    myCloset.going_Left = theAnimations[2];
+                    myCloset.going_Right = theAnimations[3];
+                    break;
+                default: break;
+            }
         }
 
         public void setDead()
@@ -21,7 +52,65 @@ namespace FakeArcade2.GameStuff
             this.is_dead = true;
         }
 
-        public new abstract void Update(GameTime _gameTime);
+        public void Revive()
+        {
+            this.horizontal = 0;
+            this.vertical = 0;
+            this.is_dead = false;
+            this.setPostion((int)myStart.X, (int)myStart.Y);
+            this.animator.animationPlay(myCloset.starting_Animation);
+            collisionBehavior = (Collision)this.myAABB.myBehavior;
+        }
+
+        public new void Update(GameTime _gameTime)
+        {
+            CheckCloset();
+            if(in_air)
+            {
+                vertical += 10;
+            }
+            base.Update( _gameTime);
+        }
+
+        public void CheckCloset()
+        {
+            if (in_air)
+            {
+                if (myCloset.air_Born != null && !myCloset.air_Born.Equals(animator.currentDrawnTexture))
+                {
+                    animator.animationPlay(myCloset.air_Born);
+                }
+            }
+            else
+            {
+                if (is_dead)
+                {
+                    if (myCloset.dead_and_on_Fire != null && !myCloset.dead_and_on_Fire.Equals(animator.currentDrawnTexture))
+                    {
+                        animator.animationPlay(myCloset.dead_and_on_Fire);
+                    }
+                }
+                else
+                {
+                    if (vertical < 0)
+                    {
+                        if (myCloset.going_Left != null && !myCloset.going_Left.Equals(animator.currentDrawnTexture))
+                        {
+                            animator.animationPlay(myCloset.going_Left);
+                        }
+                    }
+                    else
+                    {
+                        if (myCloset.going_Right != null && !myCloset.going_Right.Equals(animator.currentDrawnTexture))
+                        {
+                            animator.animationPlay(myCloset.going_Right);
+                        }
+                    }
+                }
+            }
+
+            
+        }
 
         public void Intersects(List<Optic> level_objects, (int, int) movement)
         {
@@ -34,9 +123,46 @@ namespace FakeArcade2.GameStuff
                 {
                     int currentKey = ((Player)this).hasKey;
 
-                    if(obj.suprise && this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
+                    if(this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
                     {
-                        obj.draw_me = true;
+                        if (obj.suprise)
+                        {
+                            obj.draw_me = true;
+                        }
+
+                        if (obj.collisionBehavior == Collision.Enemy)
+                        {
+                            this.horizontal = -horizontal;
+                            this.vertical = -vertical;
+                        }
+
+                        if (obj.collisionBehavior == Collision.Checkpoint)
+                        {
+                            
+                            obj.remove = true;
+                            ((Player)this).myStart = obj.getPosition();
+                            
+                        }
+
+                        if (obj.collisionBehavior == Collision.Key)
+                        {
+                       
+                            Key thatKey = (Key)obj;
+                            Player play = (Player)this;
+                            play.hasKey = thatKey.key_value;
+                            thatKey.remove = true;
+                            
+                        }
+
+                        if (obj.collisionBehavior == Collision.End)
+                        {
+                           
+                            Player play = (Player)this;
+                            play.exit_found = obj.my_exit_code;
+                            play.at_Exit = true;
+                            
+                        }
+
                     }
 
                     if (obj.trigger == currentKey)
@@ -56,11 +182,13 @@ namespace FakeArcade2.GameStuff
                             }
                         }
 
-                        if(obj.collisionBehavior == Collision.Checkpoint)
+                        if(obj.collisionBehavior == Collision.Checkpoint && obj.trigger != 0)
                         {
                             obj.remove = true;
-                            ((Player)this).PlayerStart = obj.getPosition();
+                            ((Player)this).myStart = obj.getPosition();
                         }
+
+                       
                     }
 
                     if(obj.fog)
@@ -72,36 +200,13 @@ namespace FakeArcade2.GameStuff
                         }
                     }
 
-                    if(obj.collisionBehavior == Collision.Checkpoint)
+                    if(this.is_dead && obj as Enemy != null)
                     {
-                        if(this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
-                        {
-                            obj.remove = true;
-                            ((Player)this).PlayerStart = obj.getPosition();
-                        }
-                    }
-
-                    if (obj.collisionBehavior == Collision.Key)
-                    {
-                        if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
-                        {
-                            Key thatKey = (Key)obj;
-                            Player play = (Player)this;
-                            play.hasKey = thatKey.key_value;
-                            thatKey.remove = true;
-                        }
-                    }
-
-                    if(obj.collisionBehavior == Collision.End)
-                    {
-                        if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds))
-                        {
-                            Player play = (Player)this;
-                            play.exit_found = obj.my_exit_code; 
-                            play.at_Exit = true;
-                        }
+                        if (obj.is_dead)
+                            ((Enemy)obj).Revive();
                     }
                 }
+
 
                 if (obj as Sprite != null) //I don't think this is the right approach
                 {
@@ -110,26 +215,33 @@ namespace FakeArcade2.GameStuff
                     {
                         if (this.myAABB.myBounds.Intersects(newObj.myAABB.myBounds))
                         {
-                            this.horizontal += -newObj.displacement.Item1;
-                            this.vertical += -newObj.displacement.Item2;
-                          
+
+                            if (this.collisionBehavior == Collision.Enemy)
+                            {
+                                this.horizontal += newObj.displacement.Item1;
+                                this.vertical += newObj.displacement.Item2;
+                            }
+                            else
+                            {
+                                this.horizontal += -newObj.displacement.Item1;
+                                this.vertical += -newObj.displacement.Item2;
+                            }
                         }
                     }
                 }
 
 
-                if (obj.collisionBehavior == Collision.Solid || obj.collisionBehavior == Collision.Sturdy)
+                if (obj.collisionBehavior == Collision.Solid || obj.collisionBehavior == Collision.Stable  && this as Player != null || obj.collisionBehavior == Collision.Sturdy && this as Enemy != null)
                 {
-                    
 
                     if (touchingLeft(obj.myAABB, movement.Item1))
                     {
                         if (horizontal < 0)
                             horizontal = 0;
-
-                        while (this.myAABB.myBounds.Left > obj.myAABB.myBounds.Right + 1)
+                        while (this.myAABB.myBounds.Left >= obj.myAABB.myBounds.Right + 1)
                         {
-                            moveMe(-((myAABB.myBounds.Left - obj.myAABB.myBounds.Right) - 1), 0f);
+                            int test = obj.myAABB.myBounds.Right;
+                            moveMe(-(this.myAABB.myBounds.Left - obj.myAABB.myBounds.Right), 0);
                         }
                     }
 
@@ -137,10 +249,9 @@ namespace FakeArcade2.GameStuff
                     {
                         if (horizontal > 0)
                             horizontal = 0;
-
-                        while (this.myAABB.myBounds.Right < obj.myAABB.myBounds.Left - 1)
+                        while (this.myAABB.myBounds.Right <= obj.myAABB.myBounds.Left - 1)
                         {
-                            moveMe(((obj.myAABB.myBounds.Left - this.myAABB.myBounds.Right)), 0);
+                            moveMe(obj.myAABB.myBounds.Left - this.myAABB.myBounds.Right, 0);
                         }
                     }
 
@@ -199,8 +310,6 @@ namespace FakeArcade2.GameStuff
             {
                 in_air = true;
             }
-
         }
-
     }
 }

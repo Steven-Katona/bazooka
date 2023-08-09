@@ -11,7 +11,7 @@ namespace FakeArcade2.GameStuff
     struct AnimationLogic
     {
         Animation animation { get; set; }
-        Texture2D currentDrawnTexture { get; set; }
+        public Texture2D currentDrawnTexture { get; set; }
         private int frameIndex;
         private float time;
         private float draw_priority;

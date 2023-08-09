@@ -72,7 +72,7 @@ namespace FakeArcade2.GameStuff
                     //transition = focus.getPosition();
                 }
 
-                if(focus.getPosition().Y > zoneWidth)
+                if(focus.getPosition().Y > zoneHeight)
                 {
                     focus.is_dead= true;
                 }

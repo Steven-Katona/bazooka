@@ -2,6 +2,10 @@ C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\hit
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\hitbox2d\lava_hitbox.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\hitbox2d\man_man_hitbox.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\0.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\1.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\2.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\3.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\4.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\test2_level.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\bazooka.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\block_fakeArcade2.xnb
@@ -9,6 +13,7 @@ C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\tex
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\door_sprite_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\explosion_sprite_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\fire_bug_sprite_sheet.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\flag_sprite_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\fly_fall_sprite_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\fly_sprite_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\grenade.xnb
@@ -42,8 +47,5 @@ C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Debug\net6.0\refint\Fake
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Debug\net6.0\FakeArcade2.pdb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Debug\net6.0\FakeArcade2.genruntimeconfig.cache
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Debug\net6.0\ref\FakeArcade2.dll
-C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\1.xnb
-C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\2.xnb
-C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\3.xnb
-C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\texture2d\flag_sprite_sheet.xnb
-C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\4.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\5.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Debug\net6.0\Content\level2d\6.xnb

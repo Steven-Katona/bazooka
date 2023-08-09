@@ -18,19 +18,12 @@ namespace FakeArcade2.GameStuff
             setDisplacement(((int)(horizontal/ 4), (int)(vertical/ 4)));
         }
 
-        public override void Update(GameTime gameTime)
+        public new void Update(GameTime gameTime)
         {
+            ((Entity)this).Update(gameTime);
             if(animator.is_animation_over())
             {
                 remove = true;
-            }
-
-            preUpdate(gameTime);
-            moveMe(movement.Item1, movement.Item2);
-
-            if(in_air)
-            {
-                vertical += 10;
             }
         }
 

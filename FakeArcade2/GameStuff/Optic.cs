@@ -7,7 +7,7 @@ namespace FakeArcade2.GameStuff
 {
     internal class Optic
     {
-        Animation myVisual;
+        protected Animation myVisual;
         public enum Collision : ushort
         {
             None = 0,
@@ -18,7 +18,9 @@ namespace FakeArcade2.GameStuff
             End = 5,
             Safe = 6,
             Key = 7,
-            Checkpoint = 8
+            Checkpoint = 8,
+            Enemy = 9,
+            Stable = 10
         };
         public bool remove { get; set; }
         public bool immobile {get; set; }
@@ -139,6 +141,7 @@ namespace FakeArcade2.GameStuff
                     appear_disappear = true;
                     break;
                 case 9:
+                    collisionBehavior = (Collision)my_collision;
                     break;
 
                 default: break;
