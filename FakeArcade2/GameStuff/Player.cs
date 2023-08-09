@@ -37,51 +37,51 @@ namespace FakeArcade2.GameStuff
 
             if (!is_dead)
             {
-                if (state.IsKeyDown(Keys.NumPad6))
+                if (state.IsKeyDown(Keys.NumPad6) || state.IsKeyDown(Keys.Right))
                 {
                     launchingPosition = new (this.myAABB.myBounds.Right,this.myAABB.myBounds.Center.Y);
                     projectile_path = (1,0);
                     horizontal += 6;
                 }
 
-                if (state.IsKeyDown(Keys.NumPad4))
+                if (state.IsKeyDown(Keys.NumPad4) || state.IsKeyDown(Keys.Left))
                 {
                     launchingPosition = new(this.myAABB.myBounds.Left, this.myAABB.myBounds.Center.Y);
                     horizontal -= 6;
                     projectile_path = (-1, 0);
                 }
 
-                if (state.IsKeyDown(Keys.NumPad2))
+                if (state.IsKeyDown(Keys.NumPad2) || state.IsKeyDown(Keys.Down))
                 {
                     launchingPosition = new(this.myAABB.myBounds.Center.X, (int)this.myAABB.myBounds.Bottom);
                     projectile_path = (0, 1);
                 }
 
-                if (state.IsKeyDown(Keys.NumPad8))
+                if (state.IsKeyDown(Keys.NumPad8) || state.IsKeyDown(Keys.Up))
                 {
                     launchingPosition = new(this.myAABB.myBounds.Center.X, (int)this.myAABB.myBounds.Top);
                     projectile_path = (0, -1);
                 }
 
-                if (state.IsKeyDown(Keys.NumPad1))
+                if (state.IsKeyDown(Keys.NumPad1) || state.IsKeyDown(Keys.Down) && state.IsKeyDown(Keys.Left))
                 {
                     launchingPosition = new(this.myAABB.myBounds.Left, (int)this.myAABB.myBounds.Bottom);
                     projectile_path = (-1, 1);
                 }
 
-                if (state.IsKeyDown(Keys.NumPad3))
+                if (state.IsKeyDown(Keys.NumPad3) || state.IsKeyDown(Keys.Down) && state.IsKeyDown(Keys.Right))
                 {
                     launchingPosition = new(this.myAABB.myBounds.Right, (int)this.myAABB.myBounds.Bottom);
                     projectile_path = (1, 1);
                 }
 
-                if (state.IsKeyDown(Keys.NumPad7))
+                if (state.IsKeyDown(Keys.NumPad7) || state.IsKeyDown(Keys.Up) && state.IsKeyDown(Keys.Left))
                 {
                     launchingPosition = new(this.myAABB.myBounds.Left, (int)this.myAABB.myBounds.Top);
                     projectile_path = (-1, -1);
                 }
 
-                if (state.IsKeyDown(Keys.NumPad9))
+                if (state.IsKeyDown(Keys.NumPad9) || state.IsKeyDown(Keys.Up) && state.IsKeyDown(Keys.Right))
                 {
                     launchingPosition = new(this.myAABB.myBounds.Right, (int)this.myAABB.myBounds.Top);
                     projectile_path = (1, -1);

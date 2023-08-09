@@ -37,7 +37,8 @@ namespace FakeArcade2.GameStuff
                 { 20, 4}, //end point
                 { 150, 6}, //key
                 { 200, 7}, //checkPoint
-                { 230, 8} //jumpingMan
+                { 230, 8}, //jumpingMan
+                { 120, 9} //bounceBlock
             };
             graphicDevice = _graphicsDevice;
             content = Content;
@@ -164,6 +165,17 @@ namespace FakeArcade2.GameStuff
                     jumping.PopulateCloset(jump_closetContent);
                     level_objects.Add(jumping);
                     break;
+                case 9:
+                    HazardBlocks blok = new(new Animation(AnimationConstruction.createAnimationTexture("block_locked", graphicDevice, content), .20f, true), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 11), true, position);
+                    if(lookup_color_data != 0)
+                    {
+                        Color special_level_data = lookupValues[lookup_color_data];
+                        Color special_option_data = lookupValues[lookup_color_data - 1];
+                        blok.SpecialOption(special_option_data.R, special_option_data.G);
+                        blok.Optic_behavior_alteration(special_level_data.R, special_level_data.G, special_level_data.B);
+                    }
+                    level_objects.Add(blok);
+                    break;
                 default: break;
             }
         }
@@ -188,7 +200,10 @@ namespace FakeArcade2.GameStuff
                     Sprite sprite = (Sprite)item;
                     sprite.Update(gameTime);
 
-                    
+                    if (item as Hazard != null)
+                    {
+                        ((Hazard)item).Update(gameTime);
+                    }
 
                     if (item as Entity != null)
                     {

@@ -163,6 +163,11 @@ namespace FakeArcade2.GameStuff
                             
                         }
 
+                        if(obj.collisionBehavior == Collision.Bounce)
+                        {
+                            this.vertical = -1 * Math.Abs(vertical) - 10;
+                        }
+
                     }
 
                     if (obj.trigger == currentKey)

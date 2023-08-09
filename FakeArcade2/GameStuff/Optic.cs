@@ -20,7 +20,8 @@ namespace FakeArcade2.GameStuff
             Key = 7,
             Checkpoint = 8,
             Enemy = 9,
-            Stable = 10
+            Stable = 10,
+            Bounce = 11
         };
         public bool remove { get; set; }
         public bool immobile {get; set; }

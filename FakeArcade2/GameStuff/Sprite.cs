@@ -27,11 +27,15 @@ namespace FakeArcade2.GameStuff
             
             if(horizontal < 0)
             {
+                if (x_move > 32)
+                    x_move = 31;
                 x_move = x_move * -1;
             }
 
             if(vertical < 0)
             {
+                if (y_move > 32)
+                    y_move = 31;
                 y_move = y_move * -1;
             }
 
