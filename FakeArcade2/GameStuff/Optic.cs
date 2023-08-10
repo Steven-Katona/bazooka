@@ -34,7 +34,7 @@ namespace FakeArcade2.GameStuff
         public bool fog { get; set; }
         public bool suprise { get; set; }
   
-
+        protected Rectangle drawnRectangle;
         protected Vector2 myLocation;
         public Hitbox myAABB { get; set; }
         protected AnimationLogic animator;
@@ -52,6 +52,8 @@ namespace FakeArcade2.GameStuff
             this.is_dead = is_dead;
             breakable = false;
             my_exit_code = 1;
+            drawnRectangle = new ((int)getPosition().X, (int)getPosition().Y, 32, 32);
+            
         }
 
         public Vector2 getPosition()
@@ -66,9 +68,10 @@ namespace FakeArcade2.GameStuff
 
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {
+
             if (myVisual.myAnimation != null) 
             {
-                animator.Draw(_gameTime, _spriteBatch, getPosition(), myAABB.myCenter, SpriteEffects.None);
+                animator.Draw(_gameTime, _spriteBatch, getPosition(), drawnRectangle, new Vector2(0, 0), SpriteEffects.None);
             }
             else
             {
@@ -91,6 +94,12 @@ namespace FakeArcade2.GameStuff
             myAABB.getBounds().X = newX;
             myAABB.getBounds().Y = newY;
             myAABB.set_Offset(myAABB.my_offset);
+        }
+
+        public void setAnimationPosition(int newX, int newY)
+        {
+            myLocation.X = newX;
+            myLocation.Y = newY;
         }
 
         public Vector2 getVector()
@@ -143,6 +152,11 @@ namespace FakeArcade2.GameStuff
                     break;
                 case 9:
                     collisionBehavior = (Collision)my_collision;
+                    break;
+                case 10:
+                    this.animator.rotate = 3.14f;
+                    myAABB.reconfigure_Offset(new Point((int)0,(int)myAABB.my_offset.Y));
+                    setAnimationPosition((int)this.getPosition().X + 32, (int)this.getPosition().Y + 32);
                     break;
 
                 default: break;

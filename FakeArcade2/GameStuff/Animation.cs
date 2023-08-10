@@ -10,25 +10,31 @@ namespace FakeArcade2.GameStuff
 {
     internal class Animation
     {
-        public Texture2D[] myAnimation { get; set; }
-        public Texture2D staticAnimation { get; set; }
+        public Texture2D myAnimation { get; set; }
         public float frameTime { get; set; }
         public bool isLooping { get; set; }
         public int startFrame { get; set; }
+        public int myHeight { get; set; }
+        public int myWidth { get; set; }
 
-        public Animation(Texture2D[] animationFrames, float frameTime, bool isLooping, int startFrame = 0) 
-        { 
-            myAnimation = animationFrames;
+        public Animation(Texture2D animationFrame, float frameTime, bool isLooping, int myHeight, int myWidth)
+        {
+            myAnimation = animationFrame;
             this.frameTime = frameTime;
             this.isLooping = isLooping;
             this.startFrame = startFrame;
+            this.myHeight = myHeight;
+            this.myWidth = myWidth;
         }
 
-        public Animation(Texture2D animationFrames, float frameTime, bool isLooping)
+        public Animation(Animation animation)
         {
-            staticAnimation = animationFrames;
-            this.frameTime = frameTime;
-            this.isLooping = isLooping;
+            myAnimation = animation.myAnimation;
+            this.frameTime = animation.frameTime;
+            this.isLooping = animation.isLooping;
+            this.startFrame = animation.startFrame;
+            this.myHeight = animation.myHeight;
+            this.myWidth = animation.myWidth;
         }
 
     }

@@ -16,7 +16,9 @@ namespace FakeArcade2.GameStuff
         private float time;
         private float draw_priority;
         private bool animationEnd;
+        SpriteEffect myEffects;
         public float rotate { get; set; }
+        Point offset;
 
         public bool is_animation_over()
         {
@@ -31,24 +33,9 @@ namespace FakeArcade2.GameStuff
             }
 
             this.animation = the_current_Animation;
+            currentDrawnTexture = animation.myAnimation;
             frameIndex = this.animation.startFrame;
             time = 0;
-            if (animation.myAnimation.Length == 1)
-            {
-                animation.staticAnimation = animation.myAnimation[0];
-                currentDrawnTexture = animation.staticAnimation;
-            }
-            else
-            {
-                currentDrawnTexture = animation.myAnimation[0];
-            }
-
-
-            if(animation.myAnimation == null)
-            {
-                currentDrawnTexture = animation.staticAnimation;
-            }
-
             animationEnd = false;
 
         }
@@ -58,41 +45,46 @@ namespace FakeArcade2.GameStuff
             draw_priority = value;
         }
 
-        public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch, Vector2 position, Vector2 center, SpriteEffects _spriteEffects )
+        public void setEffects(SpriteEffect effect)
+        {
+            this.myEffects = effect;
+        }
+
+        public void setOffset(Point offset) { this.offset = offset; }
+
+        public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch, Vector2 position, Rectangle mySource, Vector2 center, SpriteEffects _spriteEffects )
         {
             if(currentDrawnTexture == null)
             {
                 throw new NotSupportedException("No animation is present at draw time!");
             }
 
-
-
             time += (float)_gameTime.ElapsedGameTime.TotalSeconds;
 
-            if(animation.myAnimation.GetType() == typeof(Texture2D[]))
-            { 
-                while(time > animation.frameTime)
+            while (time > animation.frameTime)
+            {
+                if (animation.isLooping)
                 {
-                    if (animation.isLooping)
-                    {
-                        frameIndex = (frameIndex + 1) % animation.myAnimation.Length;
-                        currentDrawnTexture = animation.myAnimation[frameIndex];
-                    }
-                    else
-                    {
-                        frameIndex = Math.Min((frameIndex + 1) % animation.myAnimation.Length, animation.myAnimation.Length - 1);
-                        currentDrawnTexture = animation.myAnimation[frameIndex];
-
-                        if (frameIndex == animation.myAnimation.Length - 1)
-                        { animationEnd = true; }
-                    }
-                    time = 0;
+                    frameIndex = (frameIndex + 1) % (animation.myAnimation.Width / animation.myWidth);
                 }
-                
+                else
+                {
+                    frameIndex = Math.Min((frameIndex + 1) % (animation.myAnimation.Width / animation.myWidth), (animation.myAnimation.Width / animation.myWidth - 1));
+
+                    if (frameIndex == animation.myAnimation.Width / animation.myWidth - 1)
+                    { animationEnd = true; }
+                }
+                time = 0;
             }
 
+            
+            
 
-            _spriteBatch.Draw(currentDrawnTexture, position, Color.White);
+            Rectangle source = new(animation.myWidth * frameIndex, 0, animation.myWidth, animation.myHeight);
+            _spriteBatch.Draw(currentDrawnTexture, new Rectangle((int)position.X + offset.X, (int)position.Y + offset.Y, mySource.Width, mySource.Height), source, Color.White, rotate, center,_spriteEffects,draw_priority);
+            //_spriteBatch.Draw()
+            //_spriteBatch.Draw(currentDrawnTexture, new Rectangle((int)position.X,(int)position.Y,mySource.Width,mySource.Height), Color.Wheat);
+  
         }
 
     }

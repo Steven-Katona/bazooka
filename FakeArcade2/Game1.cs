@@ -15,7 +15,7 @@ namespace FakeArcade2
         Level currentLevel;
         int maxWidth;
         int maxHeight;
-        int Level = 7;
+        int Level = 8;
 
         public Game1()
         {

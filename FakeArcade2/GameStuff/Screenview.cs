@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,9 @@ namespace FakeArcade2.GameStuff
         private int zoneHeight;
         Optic focus;
         Vector2 transition;
+        Texture2D pointer;
 
-        public Screenview(Vector2 startingPosition,Optic focus, int maxWidth, int maxHeight, int worldWidth, int worldHeight ) 
+        public Screenview(Vector2 startingPosition,Optic focus, int maxWidth, int maxHeight, int worldWidth, int worldHeight, Texture2D pointer) 
         {
             //focus.getPosition().X  
             offset_x_axis = maxWidth / 2;
@@ -27,6 +29,7 @@ namespace FakeArcade2.GameStuff
             this.startingPosition = startingPosition;
             this.focus = focus;
             transition = new(0, 0);
+            this.pointer = pointer;
 
         }
 
@@ -86,6 +89,14 @@ namespace FakeArcade2.GameStuff
         public void newFocus(Optic newSubject)
         {
             focus = newSubject;
+        }
+
+        public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
+        {
+            if(focus.getPosition().Y < 0)
+            {
+                _spriteBatch.Draw(pointer, new Vector2(focus.getPosition().X, 0), Color.White);
+            }
         }
     }
 }

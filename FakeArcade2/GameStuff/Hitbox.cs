@@ -52,7 +52,12 @@ namespace FakeArcade2.GameStuff
         {
             this.myBounds.X += offset.X;
             this.myBounds.Y += offset.Y;
+        }
 
+        public void reconfigure_Offset(Point offset)
+        {
+            this.myBounds.X -= offset.X;
+            this.myBounds.Y -= offset.Y;
         }
 
         public bool isDrawnBox()

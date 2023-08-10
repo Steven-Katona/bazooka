@@ -12,6 +12,7 @@ namespace FakeArcade2.GameStuff
         {
             is_exploding = false;
             this.explosion = explosion;
+            animator.setDrawPriority(1);
             in_air = true;
             horizontal = direction_path.Item1 * speed;
             vertical = direction_path.Item2 * speed;
@@ -36,8 +37,9 @@ namespace FakeArcade2.GameStuff
                     if (this.myAABB.myBounds.Intersects(obj.myAABB.myBounds) && !is_exploding)
                     {
                         animator.animationPlay(explosion);
-                        this.setPostion((int)this.getPosition().X - 23, (int)this.getPosition().Y - 23);
-                        myAABB = new((int)this.getPosition().X, (int)this.getPosition().Y, 64, 64, new Point(0, 0), 0);
+                        myAABB = new((int)this.getPosition().X, (int)this.getPosition().Y, 128, 128, new Point(-48, -32), 0);
+                        drawnRectangle = new((int)this.getPosition().X, (int)this.getPosition().Y, 128, 128);
+                        animator.setOffset(new Point(-48, -32));
                         collisionBehavior = Collision.Jump;
                         is_exploding = true;
                         in_air = false;
@@ -47,6 +49,14 @@ namespace FakeArcade2.GameStuff
                         {
                             obj.remove = true;
                         }
+                    }
+                }
+
+                if(this.myAABB.myBounds.Intersects(obj.myAABB.myBounds) && is_exploding)
+                {
+                    if (obj.breakable == true)
+                    {
+                        obj.remove = true;
                     }
                 }
             }

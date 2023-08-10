@@ -16,17 +16,17 @@ namespace FakeArcade2.GameStuff
         static readonly string AnimationColor = "{R:217 G:87 B:99 A:255}";
         static readonly string HitboxColor = "{R:17 G:10 B:9 A:255}";
         private static Dictionary<string, (int, int, Point)> getHitbox;
-        private static Dictionary<string, Texture2D[]> getTextureArray;
+        private static Dictionary<string, Animation> getTextureArray;
 
         static public void Initilize()
         {
             getHitbox = new Dictionary<string, (int, int,Point)> { };
-            getTextureArray = new Dictionary<string, Texture2D[]> { };
+            getTextureArray = new Dictionary<string, Animation> { };
         }
 
-        static public Texture2D[] createAnimationTexture(string fileName, GraphicsDevice _graphicDevice, ContentManager content)
+        static public Animation createAnimationTexture(string fileName, GraphicsDevice _graphicDevice, ContentManager content, float frameTime, bool isLooping)
         {
-            Texture2D[] result;
+            Animation result;
             Texture2D file = content.Load <Texture2D>("texture2d/" + fileName);
             if(getTextureArray.TryGetValue(fileName, out result))
             {
@@ -42,17 +42,24 @@ namespace FakeArcade2.GameStuff
                     if (color[loop_x].ToString().Equals(AnimationColor))
                     {
                         newWidth = loop_x + 1;
+                        color[loop_x] = new Color(0,0,0);
                     }
                 }
 
-                if(newWidth == 0)
+                
+
+                if (newWidth == 0)
                 {
-                    result = new Texture2D[1];
-                    result[0] = file;
-                    getTextureArray.Add(fileName, result);
-                    return result;
+                    result = new Animation(file, frameTime, isLooping, file.Width ,file.Height);
+                }
+                else 
+                {
+                    Texture2D frame = new(_graphicDevice, file.Width, file.Height);
+                    frame.SetData(color);
+                    result = new Animation(frame, frameTime, isLooping, newWidth, file.Height);
                 }
 
+                /*
                 int frameCount = file.Width / newWidth;
                 result = new Texture2D[frameCount];
                 int dummy_Value = 0;
@@ -85,7 +92,7 @@ namespace FakeArcade2.GameStuff
 
                     dummy_Value += newWidth;
                     result[iteration] = frame;
-                }
+                }*/
 
                 return result;
             }

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace FakeArcade2.GameStuff
 {
@@ -24,7 +25,10 @@ namespace FakeArcade2.GameStuff
         int maxLevelHeight;
         int lava_offset = 0;
         bool endLevel = false;
- 
+        Texture2D point;
+        Texture2D bazoo;
+
+
         Point Player_Offset;
         public (int, int) levelDimensions { get; set; }
         public Level(IServiceProvider service, ContentManager Content, GraphicsDevice _graphicsDevice, Texture2D colorMap, int maxWidth, int maxHeight)
@@ -45,6 +49,8 @@ namespace FakeArcade2.GameStuff
             level_objects = new List<Optic>();
             remove_me = new List<Optic>();
 
+            bazoo = content.Load<Texture2D>("texture2d/bazooka");
+            point = content.Load<Texture2D>("texture2d/pointer");
             level_addition = 0;
             Vector2 positioning = new Vector2(0, 0);
             Color[] colorArray = new Color[colorMap.Height * colorMap.Width]; //height - 1?
@@ -90,7 +96,7 @@ namespace FakeArcade2.GameStuff
             switch (code)
             {
                 case 1:
-                    Optic block = new Optic(new Animation(AnimationConstruction.createAnimationTexture("block_fakeArcade2", graphicDevice, content), .20f, true),new ((int)position.X,(int)position.Y, 32,32, new Point(0,0), 2), true, position);
+                    Optic block = new Optic( (AnimationConstruction.createAnimationTexture("block_fakeArcade2", graphicDevice, content, .20f, true)),new ((int)position.X,(int)position.Y, 32,32, new Point(0,0), 2), true, position);
                     if(lookup_color_data != 0)
                     {
                         Color special_level_data = lookupValues[lookup_color_data];
@@ -100,16 +106,16 @@ namespace FakeArcade2.GameStuff
                     break;
                 case 2:
                     (int, int, Point) man_tupple = (AnimationConstruction.createHitbox("man_man_hitbox", content));
-                    the_Player = new Player(new Animation(AnimationConstruction.createAnimationTexture("man_sprite_sheet", graphicDevice, content), .20f, true), new Hitbox((man_tupple.Item1,man_tupple.Item2), ((int)position.X, (int)position.Y), man_tupple.Item3, 6), (int)position.X, (int)position.Y, false);
+                    the_Player = new Player((AnimationConstruction.createAnimationTexture("man_sprite_sheet", graphicDevice, content, .20f, true)), bazoo,new Hitbox((man_tupple.Item1,man_tupple.Item2), ((int)position.X, (int)position.Y), man_tupple.Item3, 6), (int)position.X, (int)position.Y, false);
                     the_Player.myStart = position;
                     Player_Offset = man_tupple.Item3;
-                    Animation[] man_closetContent = { new Animation(AnimationConstruction.createAnimationTexture("jump_fire_sprite_sheet", graphicDevice, content), .20f, true) };
+                    Animation[] man_closetContent = {(AnimationConstruction.createAnimationTexture("jump_fire_sprite_sheet", graphicDevice, content, .20f, true)) };
                     the_Player.PopulateCloset(man_closetContent);
-                    initilizeView();
+                    initilizeView(point);
                     break;
                 case 3:
                     (int, int, Point) lava_tupple = (AnimationConstruction.createHitbox("lava_hitbox", content));
-                    Optic lava = new Optic(new Animation(AnimationConstruction.createAnimationTexture("lava_sprite_sheet", graphicDevice, content), .20f, true, (lava_offset % 7)), new Hitbox(lava_tupple,position, 1), true, position);
+                    Optic lava = new Optic( (AnimationConstruction.createAnimationTexture("lava_sprite_sheet", graphicDevice, content, .20f, true)), new Hitbox(lava_tupple,position, 1), true, position);
                     if(lookup_color_data != 0)
                     {
                         Color special_level_data = lookupValues[lookup_color_data];
@@ -119,7 +125,7 @@ namespace FakeArcade2.GameStuff
                     lava_offset += 1;
                     break;
                 case 4:
-                    Sprite end_point = new Sprite(new Animation(AnimationConstruction.createAnimationTexture("door_sprite_sheet", graphicDevice, content), .20f, false), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 5), true, position);
+                    Sprite end_point = new Sprite( (AnimationConstruction.createAnimationTexture("door_sprite_sheet", graphicDevice, content, .20f, true)), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 5), true, position);
                     if (lookup_color_data != 0)
                     {
                         Color special_level_data = lookupValues[lookup_color_data];
@@ -130,11 +136,11 @@ namespace FakeArcade2.GameStuff
                     break;
                 case 5:
                     (int, int, Point) grenade_tupple = AnimationConstruction.createHitbox("grenade_hitbox", content);
-                    Grenade newGrenade = new Grenade(new Animation(AnimationConstruction.createAnimationTexture("grenade", graphicDevice, content),.20f, true), new Hitbox(grenade_tupple,position, 6), new Animation(AnimationConstruction.createAnimationTexture("explosion_sprite_sheet", graphicDevice, content), .05f, false),  position, the_Player.projectile_path);
+                    Grenade newGrenade = new Grenade( (AnimationConstruction.createAnimationTexture("grenade", graphicDevice, content,.20f, true)), new Hitbox(grenade_tupple,position, 6), (AnimationConstruction.createAnimationTexture("explosion_sprite_sheet", graphicDevice, content, .05f, false)),  position, the_Player.projectile_path);
                     level_objects.Insert(0,newGrenade);
                     break;
                 case 6:
-                    Key newKey = new Key(new Animation(AnimationConstruction.createAnimationTexture("key_sprite_sheet",graphicDevice,content), .30f, true),new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 7),true,position,lookup_color_data-1);
+                    Key newKey = new Key( AnimationConstruction.createAnimationTexture("key_sprite_sheet",graphicDevice,content, .30f, true),new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 7),true,position,lookup_color_data-1);
                     if (lookup_color_data != 0)
                     {
                         Color special_level_data = lookupValues[lookup_color_data];
@@ -143,7 +149,7 @@ namespace FakeArcade2.GameStuff
                     level_objects.Add(newKey);
                     break;
                 case 7:
-                    Sprite check = new (new Animation(AnimationConstruction.createAnimationTexture("flag_sprite_sheet", graphicDevice, content), .30f, true), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 8), true, position);
+                    Sprite check = new ( (AnimationConstruction.createAnimationTexture("flag_sprite_sheet", graphicDevice, content, .30f, true)), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 8), true, position);
                     if (lookup_color_data != 0)
                     {
                         Color special_level_data = lookupValues[lookup_color_data];
@@ -152,7 +158,7 @@ namespace FakeArcade2.GameStuff
                     level_objects.Add(check);
                     break;
                 case 8:
-                    JumpingMan jumping = new(new Animation(AnimationConstruction.createAnimationTexture("jumping_sprite_sheet", graphicDevice, content), .30f, true), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 9), false, position);
+                    JumpingMan jumping = new( (AnimationConstruction.createAnimationTexture("jumping_sprite_sheet", graphicDevice, content, .30f, true)), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 9), false, position);
                     if (lookup_color_data != 0)
                     {
                         
@@ -161,12 +167,12 @@ namespace FakeArcade2.GameStuff
                         jumping.SpecialOptions(special_option_data.R, special_option_data.G);
                         jumping.Optic_behavior_alteration(special_level_data.R, special_level_data.G, special_level_data.B);
                     }
-                    Animation[] jump_closetContent = { new Animation(AnimationConstruction.createAnimationTexture("jump_fire_sprite_sheet", graphicDevice, content), .20f, true) };
+                    Animation jump_closetContent = AnimationConstruction.createAnimationTexture("jump_fire_sprite_sheet", graphicDevice, content, .20f, true);
                     jumping.PopulateCloset(jump_closetContent);
                     level_objects.Add(jumping);
                     break;
                 case 9:
-                    HazardBlocks blok = new(new Animation(AnimationConstruction.createAnimationTexture("block_locked", graphicDevice, content), .20f, true), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 11), true, position);
+                    HazardBlocks blok = new( (AnimationConstruction.createAnimationTexture("block_locked", graphicDevice, content, .20f, true)), new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 11), true, position);
                     if(lookup_color_data != 0)
                     {
                         Color special_level_data = lookupValues[lookup_color_data];
@@ -185,9 +191,9 @@ namespace FakeArcade2.GameStuff
             return view.getOffsetTransformation();
         }
 
-        protected void initilizeView()
+        protected void initilizeView(Texture2D pointer)
         {
-            view = new(new Vector2(0, 0), the_Player, maxWidth, maxHeight, maxLevelWidth, maxLevelHeight);
+            view = new(new Vector2(0, 0), the_Player, maxWidth, maxHeight, maxLevelWidth, maxLevelHeight, pointer);
         }
 
         public void Update(GameTime gameTime, KeyboardState _keyState)
@@ -254,11 +260,16 @@ namespace FakeArcade2.GameStuff
                 {
                     //if(item.getPosition().X)
                     item.Draw(gameTime, _spriteBatch);
+                    /*if(item.myAABB.myBehavior  == 1)
+                    {
+                        item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
+                    }*/
                 }
-                //item.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
+                
             }
             //the_Player.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             the_Player.Draw(gameTime, _spriteBatch);
+            view.Draw(gameTime, _spriteBatch);
         }
 
         public void Dispose()

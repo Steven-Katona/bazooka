@@ -133,7 +133,6 @@ namespace FakeArcade2.GameStuff
                         if (obj.collisionBehavior == Collision.Enemy)
                         {
                             this.horizontal = -horizontal;
-                            this.vertical = -vertical;
                         }
 
                         if (obj.collisionBehavior == Collision.Checkpoint)

@@ -15,6 +15,7 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/5.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/6.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/7.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/8.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/bazooka.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/block_fakeArcade2.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/block_locked.png</File>
@@ -30,8 +31,11 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/key_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/lava_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/man_sprite_sheet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/pointer.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
