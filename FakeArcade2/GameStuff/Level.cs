@@ -134,11 +134,7 @@ namespace FakeArcade2.GameStuff
                     }
                     level_objects.Add(end_point);
                     break;
-                case 5:
-                    (int, int, Point) grenade_tupple = AnimationConstruction.createHitbox("grenade_hitbox", content);
-                    Grenade newGrenade = new Grenade( (AnimationConstruction.createAnimationTexture("grenade", graphicDevice, content,.20f, true)), new Hitbox(grenade_tupple,position, 6), (AnimationConstruction.createAnimationTexture("explosion_sprite_sheet", graphicDevice, content, .05f, false)),  position, the_Player.projectile_path);
-                    level_objects.Insert(0,newGrenade);
-                    break;
+
                 case 6:
                     Key newKey = new Key( AnimationConstruction.createAnimationTexture("key_sprite_sheet",graphicDevice,content, .30f, true),new((int)position.X, (int)position.Y, 32, 32, new Point(0, 0), 7),true,position,lookup_color_data-1);
                     if (lookup_color_data != 0)
@@ -193,7 +189,7 @@ namespace FakeArcade2.GameStuff
 
         protected void initilizeView(Texture2D pointer)
         {
-            view = new(new Vector2(0, 0), the_Player, maxWidth, maxHeight, maxLevelWidth, maxLevelHeight, pointer);
+            view = new(new Vector2(0, 0), the_Player, maxWidth, maxHeight, maxLevelWidth, maxLevelHeight, pointer, content.Load<Texture2D>("texture2d/genericBackground"));
         }
 
         public void Update(GameTime gameTime, KeyboardState _keyState)
@@ -236,7 +232,7 @@ namespace FakeArcade2.GameStuff
             if (the_Player.shoot_grenade)
             {
                 the_Player.shoot_grenade = false;
-                placeObject(5, the_Player.getVector(), 0);
+                createGrenade(the_Player.getVector(), (0,0));
             }
 
             the_Player.Intersects(level_objects, the_Player.movement);
@@ -254,7 +250,9 @@ namespace FakeArcade2.GameStuff
 
         public void Draw(GameTime gameTime, SpriteBatch _spriteBatch, GraphicsDevice _graphicsDevice)
         {
-            foreach(Optic item in level_objects) 
+
+            view.Draw(gameTime, _spriteBatch);
+            foreach (Optic item in level_objects) 
             {
                 if (item.draw_me)
                 {
@@ -269,7 +267,16 @@ namespace FakeArcade2.GameStuff
             }
             //the_Player.myAABB.Draw(gameTime, _spriteBatch, _graphicsDevice);
             the_Player.Draw(gameTime, _spriteBatch);
-            view.Draw(gameTime, _spriteBatch);
+            
+        }
+
+        private void createGrenade(Vector2 position,(double,double) startingVelocity)
+        {
+                           
+            (int, int, Point) grenade_tupple = AnimationConstruction.createHitbox("grenade_hitbox", content);
+            Grenade newGrenade = new Grenade((AnimationConstruction.createAnimationTexture("grenade", graphicDevice, content, .20f, true)), new Hitbox(grenade_tupple, position, 6), (AnimationConstruction.createAnimationTexture("explosion_sprite_sheet", graphicDevice, content, .05f, false)), position, the_Player.projectile_path, startingVelocity);
+            level_objects.Insert(0, newGrenade);
+
         }
 
         public void Dispose()

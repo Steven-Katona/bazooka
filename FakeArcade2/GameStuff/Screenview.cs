@@ -18,8 +18,9 @@ namespace FakeArcade2.GameStuff
         Optic focus;
         Vector2 transition;
         Texture2D pointer;
-
-        public Screenview(Vector2 startingPosition,Optic focus, int maxWidth, int maxHeight, int worldWidth, int worldHeight, Texture2D pointer) 
+        Rectangle background;
+        Texture2D backgroundTexture;
+        public Screenview(Vector2 startingPosition,Optic focus, int maxWidth, int maxHeight, int worldWidth, int worldHeight, Texture2D pointer, Texture2D backgroundTexture) 
         {
             //focus.getPosition().X  
             offset_x_axis = maxWidth / 2;
@@ -30,6 +31,9 @@ namespace FakeArcade2.GameStuff
             this.focus = focus;
             transition = new(0, 0);
             this.pointer = pointer;
+            this.backgroundTexture = backgroundTexture;
+            background = new(0, 0, zoneWidth, zoneHeight);
+            
 
         }
 
@@ -93,10 +97,14 @@ namespace FakeArcade2.GameStuff
 
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {
-            if(focus.getPosition().Y < 0)
+
+            _spriteBatch.Draw(backgroundTexture, background, new Rectangle(0, 0, 480, 270), Color.White,0.0f, new Vector2(0,0),SpriteEffects.None,0.0f);
+            if (focus.getPosition().Y < 0)
             {
                 _spriteBatch.Draw(pointer, new Vector2(focus.getPosition().X, 0), Color.White);
             }
+
+            
         }
     }
 }

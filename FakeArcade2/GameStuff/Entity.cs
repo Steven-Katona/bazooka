@@ -219,7 +219,7 @@ namespace FakeArcade2.GameStuff
                     {
                         if (this.myAABB.myBounds.Intersects(newObj.myAABB.myBounds))
                         {
-
+                            
                             if (this.collisionBehavior == Collision.Enemy)
                             {
                                 this.horizontal += newObj.displacement.Item1;
@@ -230,13 +230,120 @@ namespace FakeArcade2.GameStuff
                                 this.horizontal += -newObj.displacement.Item1;
                                 this.vertical += -newObj.displacement.Item2;
                             }
+                            /*
+                            if (Math.Abs(this.myAABB.myBounds.Center.X - newObj.myAABB.myBounds.Center.X) < 10)
+                            {
+                                if (this.myAABB.myBounds.Center.X - newObj.myAABB.myBounds.Center.X < 0)
+                                {
+                                    this.vertical -= 100;
+                                }
+                                else
+                                {
+                                    this.vertical += 100;
+                                }
+                            }
+                            else
+                            {
+                                if (this.myAABB.myBounds.Center.X < newObj.myAABB.myBounds.Center.X)
+                                {
+                                    this.horizontal -= 100;
+                                }
+                                else
+                                {
+                                    this.horizontal += 100;
+                                }
+                            }
+
+                            if (Math.Abs(this.myAABB.myBounds.Center.Y - newObj.myAABB.myBounds.Center.Y) < 10)
+                            {
+                                if (this.myAABB.myBounds.Center.Y - newObj.myAABB.myBounds.Center.Y < 0)
+                                {
+                                    this.horizontal += 100;
+                                }
+                                else
+                                {
+                                    this.horizontal -= 100;
+                                }
+                            }
+                            else
+                            {
+                                if (this.myAABB.myBounds.Center.Y < newObj.myAABB.myBounds.Center.Y)
+                                {
+                                    this.vertical -= 100;
+                                }
+                                else
+                                {
+                                    this.vertical += 100;
+                                }
+                            }*/
                         }
                     }
                 }
+                
 
 
                 if (obj.collisionBehavior == Collision.Solid || obj.collisionBehavior == Collision.Stable  && this as Player != null || obj.collisionBehavior == Collision.Sturdy && this as Enemy != null)
                 {
+                    /*
+                    bool horizontal_collision = ((touchingLeft(obj.myAABB, movement.Item1)) || (touchingRight(obj.myAABB, movement.Item1)));
+                    bool vertical_collision = ((touchingTop(obj.myAABB, movement.Item2)) || (touchingBottom(obj.myAABB, movement.Item2)));
+
+                    int left_correction = -(this.myAABB.myBounds.Left + movement.Item1 - obj.myAABB.myBounds.Right); //has to be positive to be in effect
+                    int right_correction = -(this.myAABB.myBounds.Right + movement.Item1 - obj.myAABB.myBounds.Left); //has to be negative to be in effect
+                    int top_correction = -(this.myAABB.myBounds.Top + movement.Item2 - obj.myAABB.myBounds.Bottom); //has to be positive to be in effect
+                    int bottom_correction = -(this.myAABB.myBounds.Bottom + movement.Item2 - obj.myAABB.myBounds.Top); //has to be negative to be in effect
+
+                    int horizontal_correction = 0;
+                    int vertical_correction = 0;
+
+                    if(horizontal_collision || vertical_collision) 
+                    {
+                        if (left_correction > 0)
+                        {
+                            horizontal_correction = left_correction;
+
+                        }
+
+                        if (right_correction < 0)
+                        {
+                            horizontal_correction = right_correction;
+                        }
+
+                        if (top_correction > 0)
+                        {
+                            vertical_correction = top_correction;
+                        }
+
+                        if (bottom_correction < 0)
+                        {
+                            vertical_correction = bottom_correction;
+                        }
+                    }
+
+
+                    if (horizontal_collision && vertical_collision) 
+                    {
+                        moveMe((float)horizontal_correction, (float)vertical_correction);
+                    }
+                    else if(horizontal_collision)
+                    {
+                        moveMe((float)horizontal_correction, (float)vertical_correction);
+                    }
+                    else if(vertical_collision)
+                    {
+                        moveMe((float)horizontal_correction, (float)vertical_correction);
+                    }
+
+
+
+                    */
+
+
+
+
+
+
+
 
                     if (touchingLeft(obj.myAABB, movement.Item1))
                     {
@@ -244,7 +351,6 @@ namespace FakeArcade2.GameStuff
                             horizontal = 0;
                         while (this.myAABB.myBounds.Left >= obj.myAABB.myBounds.Right + 1)
                         {
-                            int test = obj.myAABB.myBounds.Right;
                             moveMe(-(this.myAABB.myBounds.Left - obj.myAABB.myBounds.Right), 0);
                         }
                     }

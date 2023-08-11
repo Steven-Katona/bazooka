@@ -8,19 +8,22 @@ namespace FakeArcade2.GameStuff
         int speed = 500;
         bool is_exploding;
         Animation explosion;
-        public Grenade(Animation visual, Hitbox aabb, Animation explosion, Vector2 myLocation, (int,int) direction_path, bool immobile = false) : base(visual, aabb, immobile, myLocation)
+        public Grenade(Animation visual, Hitbox aabb, Animation explosion, Vector2 myLocation, (int,int) direction_path, (double, double) startingVelocity, bool immobile = false) : base(visual, aabb, immobile, myLocation)
         {
             is_exploding = false;
             this.explosion = explosion;
             animator.setDrawPriority(1);
             in_air = true;
-            horizontal = direction_path.Item1 * speed;
-            vertical = direction_path.Item2 * speed;
+            horizontal = startingVelocity.Item1;
+            vertical = startingVelocity.Item2;
+            horizontal += (direction_path.Item1 * speed);
+            vertical += (direction_path.Item2 * speed);
             setDisplacement(((int)(horizontal/ 4), (int)(vertical/ 4)));
         }
 
         public new void Update(GameTime gameTime)
         {
+            
             ((Entity)this).Update(gameTime);
             if(animator.is_animation_over())
             {

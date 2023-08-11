@@ -9,6 +9,7 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/hitbox2d/man_man_hitbox.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/0.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/1.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/10.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/2.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/3.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/4.png</File>
@@ -16,6 +17,7 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/6.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/7.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/8.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/9.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/bazooka.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/block_fakeArcade2.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/block_locked.png</File>
@@ -25,6 +27,7 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/flag_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/fly_fall_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/fly_sprite_sheet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/genericBackground.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/grenade.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/jump_fire_sprite_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/jumping_sprite_sheet.png</File>
@@ -34,6 +37,9 @@
     <File>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/texture2d/pointer.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

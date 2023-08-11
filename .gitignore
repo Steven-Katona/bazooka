@@ -12,3 +12,6 @@
 /.vs/FakeArcade2/FileContentIndex/5dad35f4-25bf-49ac-b13b-d871f45af38c.vsidx
 /.vs/
 /FakeArcade2.sln
+/FakeArcade2/bin/Release
+/FakeArcade2/bin/Release/net6.0
+/FakeArcade2/bin/Release/net6.0/win-x64
