@@ -279,73 +279,44 @@ namespace FakeArcade2.GameStuff
                         }
                     }
                 }
-                
 
 
-                if (obj.collisionBehavior == Collision.Solid || obj.collisionBehavior == Collision.Stable  && this as Player != null || obj.collisionBehavior == Collision.Sturdy && this as Enemy != null)
+
+                if (obj.collisionBehavior == Collision.Solid || obj.collisionBehavior == Collision.Stable && this as Player != null || obj.collisionBehavior == Collision.Sturdy && this as Enemy != null)
                 {
-                    /*
-                    bool horizontal_collision = ((touchingLeft(obj.myAABB, movement.Item1)) || (touchingRight(obj.myAABB, movement.Item1)));
-                    bool vertical_collision = ((touchingTop(obj.myAABB, movement.Item2)) || (touchingBottom(obj.myAABB, movement.Item2)));
 
-                    int left_correction = -(this.myAABB.myBounds.Left + movement.Item1 - obj.myAABB.myBounds.Right); //has to be positive to be in effect
-                    int right_correction = -(this.myAABB.myBounds.Right + movement.Item1 - obj.myAABB.myBounds.Left); //has to be negative to be in effect
-                    int top_correction = -(this.myAABB.myBounds.Top + movement.Item2 - obj.myAABB.myBounds.Bottom); //has to be positive to be in effect
-                    int bottom_correction = -(this.myAABB.myBounds.Bottom + movement.Item2 - obj.myAABB.myBounds.Top); //has to be negative to be in effect
+                    bool left_bottom = touchingLeft(obj.myAABB, movement.Item1) && touchingBottom(obj.myAABB, movement.Item2);
+                    bool left_top = touchingLeft(obj.myAABB, movement.Item1) && touchingTop(obj.myAABB, movement.Item2);
+                    bool right_top = touchingRight(obj.myAABB, movement.Item1) && touchingTop(obj.myAABB, movement.Item2);
+                    bool right_bottom = touchingRight(obj.myAABB, movement.Item1) && touchingBottom(obj.myAABB, movement.Item2);
 
-                    int horizontal_correction = 0;
-                    int vertical_correction = 0;
+                    bool left = touchingLeft(obj.myAABB, movement.Item1);
+                    bool right = touchingRight(obj.myAABB, movement.Item1);
+                    bool top = touchingTop(obj.myAABB, movement.Item2);
+                    bool bottom = touchingBottom(obj.myAABB, movement.Item2);
 
-                    if(horizontal_collision || vertical_collision) 
+
+
+
+                    if (  left_bottom || left_top || right_top || right_bottom )
                     {
-                        if (left_correction > 0)
-                        {
-                            horizontal_correction = left_correction;
 
+                        int top_correction = -(this.myAABB.myBounds.Top + movement.Item2 - obj.myAABB.myBounds.Bottom); //has to be positive to be in effect
+                        int bottom_correction = -(this.myAABB.myBounds.Bottom + movement.Item2 - obj.myAABB.myBounds.Top); //has to be negative to be in effect
+
+                        while (this.myAABB.myBounds.Bottom < obj.myAABB.myBounds.Top - 1)
+                        {
+                            moveMe(0,bottom_correction);
                         }
 
-                        if (right_correction < 0)
+                        while (this.myAABB.myBounds.Top > obj.myAABB.myBounds.Bottom)
                         {
-                            horizontal_correction = right_correction;
-                        }
-
-                        if (top_correction > 0)
-                        {
-                            vertical_correction = top_correction;
-                        }
-
-                        if (bottom_correction < 0)
-                        {
-                            vertical_correction = bottom_correction;
+                            moveMe(0, top_correction);
                         }
                     }
-
-
-                    if (horizontal_collision && vertical_collision) 
-                    {
-                        moveMe((float)horizontal_correction, (float)vertical_correction);
-                    }
-                    else if(horizontal_collision)
-                    {
-                        moveMe((float)horizontal_correction, (float)vertical_correction);
-                    }
-                    else if(vertical_collision)
-                    {
-                        moveMe((float)horizontal_correction, (float)vertical_correction);
-                    }
-
-
-
-                    */
-
-
-
-
-
-
-
-
-                    if (touchingLeft(obj.myAABB, movement.Item1))
+                    
+                    
+                    if (left)
                     {
                         if (horizontal < 0)
                             horizontal = 0;
@@ -355,7 +326,7 @@ namespace FakeArcade2.GameStuff
                         }
                     }
 
-                    if (touchingRight(obj.myAABB, movement.Item1))
+                    if (right)
                     {
                         if (horizontal > 0)
                             horizontal = 0;
@@ -365,7 +336,7 @@ namespace FakeArcade2.GameStuff
                         }
                     }
 
-                    if (touchingBottom(obj.myAABB, movement.Item2))
+                    if (bottom)
                     {
 
                         if (vertical > 0)
@@ -380,7 +351,7 @@ namespace FakeArcade2.GameStuff
                         }
                     }
 
-                    if (touchingTop(obj.myAABB, movement.Item2))
+                    if (top)
                     {
 
                         if (vertical < 0)
@@ -393,6 +364,8 @@ namespace FakeArcade2.GameStuff
                             moveMe(0f, -(this.myAABB.myBounds.Top - obj.myAABB.myBounds.Bottom));
                         }
                     }
+                    
+                    
 
 
                 }

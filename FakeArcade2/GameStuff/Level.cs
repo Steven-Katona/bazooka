@@ -189,7 +189,7 @@ namespace FakeArcade2.GameStuff
 
         protected void initilizeView(Texture2D pointer)
         {
-            view = new(new Vector2(0, 0), the_Player, maxWidth, maxHeight, maxLevelWidth, maxLevelHeight, pointer, content.Load<Texture2D>("texture2d/genericBackground"));
+            view = new(new Vector2(0, 0), the_Player, maxWidth, maxHeight, maxLevelWidth, maxLevelHeight, pointer); //content.Load<Texture2D>("texture2d/genericBackground"));
         }
 
         public void Update(GameTime gameTime, KeyboardState _keyState)
