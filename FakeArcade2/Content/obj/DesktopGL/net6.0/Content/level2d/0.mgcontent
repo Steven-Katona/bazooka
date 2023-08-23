@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/level2d/0.png</SourceFile>
-  <SourceTime>2023-08-12T17:02:11.3429859-04:00</SourceTime>
+  <SourceTime>2023-08-12T17:13:52.6579479-04:00</SourceTime>
   <DestFile>C:/Users/steve/source/repos/FakeArcade2/FakeArcade2/Content/bin/DesktopGL/Content/level2d/0.xnb</DestFile>
-  <DestTime>2023-08-12T17:02:13.6853639-04:00</DestTime>
+  <DestTime>2023-08-12T17:19:00.7376189-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

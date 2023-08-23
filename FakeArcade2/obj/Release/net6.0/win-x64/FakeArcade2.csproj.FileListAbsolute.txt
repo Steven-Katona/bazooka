@@ -270,3 +270,4 @@ C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Release\net6.0\win-x64\r
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Release\net6.0\win-x64\FakeArcade2.pdb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Release\net6.0\win-x64\FakeArcade2.genruntimeconfig.cache
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\obj\Release\net6.0\win-x64\ref\FakeArcade2.dll
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\Content\texture2d\genericBackground.xnb

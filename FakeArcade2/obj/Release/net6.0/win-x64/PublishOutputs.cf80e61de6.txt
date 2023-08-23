@@ -23,6 +23,7 @@ C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\p
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\publish\Content/texture2d\flag_sprite_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\publish\Content/texture2d\fly_fall_sprite_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\publish\Content/texture2d\fly_sprite_sheet.xnb
+C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\publish\Content/texture2d\genericBackground.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\publish\Content/texture2d\grenade.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\publish\Content/texture2d\jumping_sprite_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade2\FakeArcade2\bin\Release\net6.0\win-x64\publish\Content/texture2d\jump_fire_sprite_sheet.xnb
